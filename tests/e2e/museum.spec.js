@@ -6,11 +6,13 @@ import { prepareConfig } from '../../src/lib/config.js';
 const museum = prepareConfig(MUSEUM);
 const { catalogue } = museum;
 const firstMasterpiece = museum.photos.length;
+/** Loading paints every masterpiece; software WebGL in CI is far slower than a real GPU. */
+const MUSEUM_LOAD_TIMEOUT = 180_000;
 
 const enterMuseum = async (page) => {
   await page.goto('./?debug');
   const stub = page.locator('.ticket__stub');
-  await expect(stub).toBeVisible();
+  await expect(stub).toBeVisible({ timeout: MUSEUM_LOAD_TIMEOUT });
   await stub.click();
   await expect(page.locator('#hud')).toBeVisible();
   await page.waitForFunction(() => window.__museum?.player.mode === 'walk');
@@ -18,7 +20,7 @@ const enterMuseum = async (page) => {
 
 test('the ticket shows the guest of honour and opens the museum', async ({ page }) => {
   await page.goto('./?debug');
-  await expect(page.locator('#ticket-title')).toHaveText(museum.museumName);
+  await expect(page.locator('#ticket-title')).toHaveText(museum.museumName, { timeout: MUSEUM_LOAD_TIMEOUT });
   await expect(page.locator('.ticket__details')).toContainText('Guest of honour');
   await expect(page.locator('.ticket__dedication')).toHaveText(museum.ticket.dedication);
   await page.locator('.ticket__stub').click();
