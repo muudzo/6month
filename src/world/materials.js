@@ -13,7 +13,7 @@ export function createMaterials() {
     ebony: new THREE.MeshStandardMaterial({ color: '#141011', metalness: 0.1, roughness: 0.35 }),
     walnut: new THREE.MeshStandardMaterial({ color: '#6b4630', map: walnutGrain, roughness: 0.55 }),
     matBoard: new THREE.MeshStandardMaterial({ color: '#f1e9d8', roughness: 0.95 }),
-    velvet: new THREE.MeshStandardMaterial({ color: PALETTE.velvet, roughness: 0.85, sheen: 1 }),
+    velvet: new THREE.MeshPhysicalMaterial({ color: PALETTE.velvet, roughness: 0.8, sheen: 1, sheenColor: '#ff8a9a' }),
     leather: new THREE.MeshStandardMaterial({ color: '#4a1a1c', roughness: 0.6 }),
     marbleWhite: new THREE.MeshStandardMaterial({ color: '#f4efe7', roughness: 0.22, metalness: 0 }),
     marbleFloor: new THREE.MeshStandardMaterial({ map: marble, roughness: 0.28 }),
