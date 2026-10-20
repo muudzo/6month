@@ -168,7 +168,7 @@ export function buildMasterpiece({ exhibit, slot, slotIndex, photo, renderer, ma
 
   const frame = createOrnateFrame({ width, height, materials });
   const group = new THREE.Group();
-  group.add(wallWash(frame.outerWidth * 2.1, frame.outerHeight * 2.3, 0.26));
+  group.add(wallWash(frame.outerWidth * 2.1, frame.outerHeight * 2.3, 0.18));
   group.add(frame.group);
   const canvas = new THREE.Mesh(new THREE.PlaneGeometry(width, height), material);
   canvas.position.z = frame.photoZ;

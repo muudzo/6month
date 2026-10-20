@@ -7,7 +7,7 @@ export function createMaterials() {
   const marble = toTexture(marbleCheckerCanvas(41), { repeat: [0.5, 0.5] });
   const walnutGrain = toTexture(panelCanvas({ wood: PALETTE.walnut, seed: 2 }));
   return {
-    gold: new THREE.MeshStandardMaterial({ color: '#d9a94f', metalness: 1, roughness: 0.27 }),
+    gold: new THREE.MeshStandardMaterial({ color: '#d4a754', metalness: 1, roughness: 0.36 }),
     goldAntique: new THREE.MeshStandardMaterial({ color: '#94702f', metalness: 1, roughness: 0.42 }),
     brass: new THREE.MeshStandardMaterial({ color: PALETTE.brass, metalness: 1, roughness: 0.32 }),
     ebony: new THREE.MeshStandardMaterial({ color: '#141011', metalness: 0.1, roughness: 0.35 }),

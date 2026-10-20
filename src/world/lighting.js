@@ -27,7 +27,7 @@ export function buildLighting(masterpieceSlots) {
   warm(0, 4.8, -71, 30);
 
   masterpieceSlots.forEach(({ position, normal }) => {
-    const spot = new THREE.SpotLight(PALETTE.warmLight, 75, 0, 0.32, 0.7, 2);
+    const spot = new THREE.SpotLight(PALETTE.warmLight, 48, 0, 0.32, 0.75, 2);
     spot.position.set(position.x + normal.x * 6, 7.8, position.z + normal.z * 6);
     spot.target.position.set(position.x, position.y, position.z);
     group.add(spot, spot.target);
