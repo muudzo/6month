@@ -3,7 +3,6 @@
   z-index: 20;
   inset: 0 0 auto;
   display: flex;
-  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-3);
@@ -36,6 +35,7 @@
 }
 
 .hud__place {
+  flex: 1;
   display: grid;
   gap: var(--space-1);
   min-width: 0;
@@ -46,6 +46,7 @@
   margin: 0;
   font: italic 400 var(--text-lg) / 1.15 var(--font-display);
   letter-spacing: -0.01em;
+  text-wrap: balance;
   transition: opacity var(--dur);
 }
 
@@ -107,6 +108,7 @@
   z-index: 15;
   left: 50%;
   bottom: calc(var(--safe-bottom) + 20px);
+  width: max-content;
   max-width: calc(100vw - 32px);
   margin: 0;
   padding: var(--space-2) var(--space-5);
@@ -173,6 +175,10 @@
 @media (max-width: 560px) {
   .hud__room {
     font-size: var(--text-md);
+  }
+
+  .hud__actions {
+    gap: var(--space-1);
   }
 }
 

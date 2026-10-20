@@ -251,8 +251,9 @@ button {
   position: fixed;
   z-index: 35;
   left: 50%;
-  top: calc(var(--safe-top) + 64px);
-  max-width: min(420px, calc(100vw - 32px));
+  top: calc(var(--safe-top) + 112px);
+  width: max-content;
+  max-width: min(440px, calc(100vw - 32px));
   padding: var(--space-3) var(--space-5);
   border: 1px solid var(--glass-edge);
   border-radius: var(--radius-chip);
