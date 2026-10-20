@@ -249,6 +249,13 @@ export function createPlayer({ camera, surface, joystick, reducedMotion, onTap, 
     setPose: (next) => {
       pose = { ...pose, ...next };
     },
+    /** Stand somewhere instantly, cancelling any glide in progress. */
+    jumpTo: (next) => {
+      glide = null;
+      mode = 'walk';
+      eyeTarget = EYE_HEIGHT;
+      pose = { ...pose, ...next };
+    },
     unlock: () => {
       mode = 'walk';
     },
