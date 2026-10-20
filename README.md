@@ -56,13 +56,18 @@ and open the "Network" address on a phone on the same Wi-Fi.
 
 ## Send it to her
 
+The museum is live at **https://museum-of-us-one.vercel.app**. It's hosted on Vercel (project `museum-of-us`),
+which is connected to the GitHub repo, so updating it is just:
+
 ```bash
-npm run build
+git push        # Vercel rebuilds and publishes main in about a minute
 ```
 
-This creates a `dist/` folder: the whole museum as a static site. The quickest way to get a link is to drag
-`dist/` onto [Netlify Drop](https://app.netlify.com/drop). Vercel or GitHub Pages work too. The page asks search
-engines not to index it, but anyone with the link can open it, so share it privately.
+`vercel deploy --prod` from this folder does the same without GitHub. Search engines are told not to index the
+site, but anyone with the link can open it, so share it privately.
+
+`vercel.json` sets the security headers, and `.vercelignore` keeps `images/` (the originals with location data)
+from ever being uploaded.
 
 It works on phones, tablets and computers in current Chrome, Safari, Firefox and Edge.
 
