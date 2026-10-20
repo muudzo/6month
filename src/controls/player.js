@@ -131,6 +131,7 @@ export function createPlayer({ camera, surface, joystick, reducedMotion, onTap, 
   surface.addEventListener('pointercancel', onPointerCancel);
 
   const movementInput = () => {
+    if (isInputBlocked()) return { forward: 0, strafe: 0, turn: 0, active: false };
     const stick = joystick.vector;
     const forward = (held(MOVE_KEYS.forward) ? 1 : 0) - (held(MOVE_KEYS.back) ? 1 : 0) + stick.y;
     const strafe = (held(MOVE_KEYS.right) ? 1 : 0) - (held(MOVE_KEYS.left) ? 1 : 0) + stick.x;
