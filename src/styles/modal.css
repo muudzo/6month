@@ -1,0 +1,352 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: grid;
+  place-items: center;
+  padding-block: var(--safe-top) var(--safe-bottom);
+  padding-left: var(--gutter-left);
+  padding-right: var(--gutter-right);
+  background: var(--scrim);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: scrim-in var(--dur) ease-out;
+}
+
+@keyframes scrim-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.modal__panel {
+  position: relative;
+  width: min(600px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: panel-in var(--dur-slow) var(--ease-out-expo);
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 1;
+}
+
+/* The letter ------------------------------------------------------------- */
+
+.letter {
+  padding: var(--space-7) clamp(1.25rem, 6vw, 3.5rem) var(--space-6);
+  border-radius: 3px;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.55), transparent 50%),
+    radial-gradient(circle at 90% 95%, rgba(170, 130, 70, 0.18), transparent 55%),
+    var(--paper);
+  color: var(--ink);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+}
+
+.letter .modal__close {
+  border-color: rgba(15, 11, 9, 0.15);
+  background: rgba(246, 239, 223, 0.9);
+  color: var(--ink);
+}
+
+.seal {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-5);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #c43347, #8c1426 60%, #5e0c19);
+  box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.35), 0 4px 10px rgba(80, 10, 20, 0.35);
+  color: rgba(255, 210, 200, 0.85);
+}
+
+.seal svg {
+  width: 28px;
+  height: 28px;
+}
+
+.letter__greeting {
+  margin: 0 0 var(--space-4);
+  font: italic 400 var(--text-xl) / 1.1 var(--font-display);
+}
+
+.letter__body p {
+  margin: 0 0 var(--space-4);
+  max-width: 60ch;
+  font: 400 var(--text-md) / 1.7 var(--font-display);
+  font-optical-sizing: auto;
+}
+
+.letter__signoff {
+  margin: var(--space-5) 0 0;
+  font: italic 400 var(--text-lg) / 1.3 var(--font-display);
+  text-align: right;
+  white-space: pre-line;
+}
+
+.renewal {
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-card);
+  background: rgba(201, 161, 74, 0.1);
+  text-align: center;
+}
+
+.renewal__question {
+  margin: 0;
+  font: italic 400 var(--text-md) / 1.45 var(--font-display);
+  text-wrap: balance;
+}
+
+.renewal__actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 100px;
+  padding-top: var(--space-2);
+}
+
+.renewal__no {
+  position: relative;
+  color: var(--ink);
+  border-color: rgba(15, 11, 9, 0.35) !important;
+  transition: transform 420ms var(--ease-out-expo), opacity var(--dur);
+}
+
+.renewal__thanks {
+  margin: 0;
+  font: italic 400 var(--text-lg) / 1.3 var(--font-display);
+  color: var(--oxblood);
+}
+
+/* Floor plan ------------------------------------------------------------- */
+
+.plan {
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  border: 1px solid var(--glass-edge);
+  border-radius: 10px;
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  width: min(720px, 100%);
+}
+
+.plan__title {
+  margin: var(--space-2) 0 var(--space-4);
+  font: italic 400 var(--text-xl) / 1.1 var(--font-display);
+}
+
+.plan__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.plan__map {
+  width: 100%;
+  height: auto;
+  max-height: 62vh;
+}
+
+.plan__room {
+  fill: rgba(240, 212, 136, 0.05);
+  stroke: rgba(240, 212, 136, 0.5);
+  stroke-width: 0.25;
+}
+
+.plan__room-label {
+  fill: var(--ivory-dim);
+  font: italic 1.5px var(--font-display);
+}
+
+.plan__dot {
+  fill: var(--ink);
+  stroke: var(--gold-bright);
+  stroke-width: 0.25;
+  cursor: pointer;
+}
+
+.plan__dot.is-seen {
+  fill: var(--gold);
+}
+
+.plan__dot:hover,
+.plan__dot:focus-visible {
+  fill: var(--gold-bright);
+  outline: none;
+}
+
+.plan__you {
+  fill: var(--rose);
+}
+
+.plan__list {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 62vh;
+  overflow-y: auto;
+}
+
+.plan__item {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-card);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--dur-fast);
+}
+
+.plan__item:hover,
+.plan__item:focus-visible {
+  background: rgba(240, 212, 136, 0.1);
+  outline: none;
+}
+
+.plan__number {
+  font: 500 var(--text-xs) / 1 var(--font-label);
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+  color: var(--gold);
+}
+
+.plan__name {
+  font: italic 400 var(--text-md) / 1.3 var(--font-display);
+  overflow-wrap: anywhere;
+}
+
+.plan__seen {
+  font: 500 var(--text-2xs) / 1 var(--font-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+}
+
+.plan__help {
+  margin: var(--space-4) 0 0;
+  font: 400 var(--text-sm) / 1.6 var(--font-label);
+  color: var(--ivory-dim);
+}
+
+.plan__help kbd {
+  padding: 1px 6px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 4px;
+  font: 500 var(--text-xs) var(--font-label);
+  color: var(--ivory);
+}
+
+@media (max-width: 640px) {
+  .plan__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .plan__map {
+    max-height: 32vh;
+  }
+
+  .plan__list {
+    max-height: none;
+  }
+}
+
+/* Coupon (all hearts found) ---------------------------------------------- */
+
+.coupon {
+  padding: var(--space-6) var(--space-5);
+  border: 2px dashed var(--gold);
+  border-radius: 12px;
+  background:
+    repeating-radial-gradient(circle at 50% 120%, transparent 0 11px, rgba(240, 212, 136, 0.06) 11px 12px),
+    linear-gradient(160deg, #5c1520, #2b0910);
+  color: var(--ivory);
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+.coupon__hearts {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  color: var(--rose);
+}
+
+.coupon__hearts svg {
+  width: 22px;
+  height: 22px;
+  animation: heart-pop 600ms var(--ease-out-expo) both;
+}
+
+@keyframes heart-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+.coupon__title {
+  margin: var(--space-2) 0 var(--space-4);
+  font: italic 400 var(--text-xl) / 1.1 var(--font-display);
+  color: var(--gold-bright);
+}
+
+.coupon__note {
+  margin: 0 auto;
+  max-width: 44ch;
+  font: 400 var(--text-md) / 1.65 var(--font-display);
+}
+
+.coupon__stamp {
+  display: inline-block;
+  margin-top: var(--space-5);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--rose);
+  border-radius: 4px;
+  font: 500 var(--text-xs) / 1 var(--font-label);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--rose);
+  transform: rotate(-4deg);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .modal,
+  .plan {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .plan {
+    background: var(--ink-raised);
+  }
+}
