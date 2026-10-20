@@ -38,12 +38,27 @@ const readSoundPreference = (storage) => {
   }
 };
 
+const SHEET_FRACTION = 0.54;
+const isSheetLayout = () => window.matchMedia('(max-width: 760px)').matches;
+const hudBottom = () => {
+  const hud = byId('hud');
+  return hud.hidden ? 0 : hud.getBoundingClientRect().bottom;
+};
+
 /** Fraction of the screen left for the artwork once the placard is open. */
 const visibleArea = () => {
-  const isSheet = window.matchMedia('(max-width: 760px)').matches;
-  if (isSheet) return { availWidth: 1, availHeight: 0.44 };
+  if (isSheetLayout()) {
+    const free = window.innerHeight * (1 - SHEET_FRACTION) - hudBottom();
+    return { availWidth: 1, availHeight: Math.max(0.2, free / window.innerHeight) };
+  }
   const covered = Math.min(PLACARD_WIDTH, window.innerWidth * 0.42) + 40;
   return { availWidth: 1 - covered / window.innerWidth, availHeight: 1 };
+};
+
+/** Pixels to slide the scene so the artwork sits in the space the placard leaves. */
+const viewShiftFor = (footprint) => {
+  if (footprint.bottom > 0) return { x: 0, y: (footprint.bottom - hudBottom()) / 2 };
+  return { x: footprint.right / 2, y: 0 };
 };
 
 /**
@@ -269,8 +284,8 @@ export function startExperience({ stage, world, museum }) {
     const busy = modal.isOpen || placard.isOpen || player.mode === 'glide' || player.mode === 'locked';
     hud.setPrompt(busy ? '' : promptFor(interaction.probe(dt), coarse));
     hud.setRoom(roomAt(player.pose.x, player.pose.z)?.name);
-    const room = placard.footprint();
-    stage.setViewShift(room.right / 2, room.bottom / 2);
+    const shift = placard.isOpen ? viewShiftFor(placard.footprint()) : { x: 0, y: 0 };
+    stage.setViewShift(shift.x, shift.y);
     stage.render(world.scene, dt);
     requestAnimationFrame(frame);
   };
