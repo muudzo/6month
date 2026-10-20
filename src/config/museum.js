@@ -8,11 +8,11 @@
  *
  * Exhibits marked `kind: 'masterpiece'` hang in the red salon and get turned
  * into oil paintings. Styles: 'renaissance' (Mona Lisa), 'gilded' (Klimt),
- * 'surreal' (Dali). Up to 12 photos and 3 masterpieces.
+ * 'surreal' (Dali). Up to 15 photos and 3 masterpieces.
  */
 export const MUSEUM = {
-  herName: 'My Love',
-  yourName: 'Your Curator',
+  herName: 'My Chocolate Brownie',
+  yourName: 'The Supreme Leader',
   /** The day it all began, YYYY-MM-DD. Drives the live counter in the lobby. */
   startDate: '2026-04-20',
   /** Optional: drop an mp3 in /public/audio/ and put e.g. 'audio/our-song.mp3' here. */
@@ -23,13 +23,14 @@ export const MUSEUM = {
 
   ticket: {
     admit: 'Admit one',
+    dedication: 'Curated by the Supreme Leader for my Chocolate Brownie',
     ticketClass: 'VIP · Very Important Partner',
     validity: 'Valid forever',
   },
 
   welcome:
-    'This exhibition gathers fifteen moments from the first six months of a love story that is still in progress. ' +
-    'Twelve are photographs. Three, by popular demand, have been promoted to masterpieces. ' +
+    'This exhibition gathers eighteen moments from the first six months of a love story that is still in progress. ' +
+    'Fifteen are photographs. Three, by popular demand, have been promoted to masterpieces. ' +
     'Please take your time. Touching the art is not permitted. Holding hands with the curator is.',
 
   exhibits: [
@@ -47,7 +48,7 @@ export const MUSEUM = {
       kind: 'photo',
       src: 'photos/02.jpg',
       title: 'First Date, Slightly Overdressed',
-      date: 'April 2026',
+      date: 'Early days',
       medium: 'Best outfit, borrowed confidence',
       note:
         'Two people, one table, and an evening that felt like ten minutes. Note the forgotten drink: ' +
@@ -57,7 +58,7 @@ export const MUSEUM = {
       kind: 'photo',
       src: 'photos/03.jpg',
       title: 'Study of a Laugh',
-      date: 'May 2026',
+      date: 'June 2026',
       medium: 'Candid photograph',
       note:
         'Captured mid-laugh, a rare and precious phenomenon. Since then the curator has devoted serious research ' +
@@ -67,7 +68,7 @@ export const MUSEUM = {
       kind: 'photo',
       src: 'photos/04.jpg',
       title: 'Selfie, Mildly Blurred',
-      date: 'May 2026',
+      date: 'June 2026',
       medium: 'Phone camera, unsteady hand',
       note:
         'Historians blame the blur on a shaky hand, a moving car, or simply the excitement of the moment. ' +
@@ -77,7 +78,7 @@ export const MUSEUM = {
       kind: 'photo',
       src: 'photos/05.jpg',
       title: 'The 3 a.m. Conversation',
-      date: 'May 2026',
+      date: 'July 2026',
       medium: 'Phone camera, zero sleep',
       note:
         'No camera could capture the conversation itself, so this photo stands in for it. ' +
@@ -87,7 +88,7 @@ export const MUSEUM = {
       kind: 'photo',
       src: 'photos/06.jpg',
       title: 'Dinner, With the Real Subject in the Background',
-      date: 'June 2026',
+      date: 'July 2026',
       medium: 'Food photography (officially)',
       note:
         'Catalogued as a photo of dinner. Close inspection reveals the curator was really photographing you ' +
@@ -97,7 +98,7 @@ export const MUSEUM = {
       kind: 'photo',
       src: 'photos/07.jpg',
       title: 'Matching Outfits (Accidental)',
-      date: 'June 2026',
+      date: 'July 2026',
       medium: 'Coincidence, allegedly',
       note: 'Neither subject will admit who copied whom. The museum’s official position: great minds dress alike.',
     },
@@ -113,7 +114,7 @@ export const MUSEUM = {
       kind: 'photo',
       src: 'photos/09.jpg',
       title: 'The Day That Went Off-Plan',
-      date: 'August 2026',
+      date: 'July 2026',
       medium: 'Phone camera, several wrong turns',
       note:
         'Nothing went according to plan, and it became one of the best days. The museum notes that every great ' +
@@ -123,7 +124,7 @@ export const MUSEUM = {
       kind: 'photo',
       src: 'photos/10.jpg',
       title: 'Candid, Unaware of Camera',
-      date: 'August 2026',
+      date: 'July 2026',
       medium: 'Stealth photography',
       note:
         'Taken while you weren’t looking: the curator’s favourite genre. You will ask for this one to be taken down. ' +
@@ -133,7 +134,7 @@ export const MUSEUM = {
       kind: 'photo',
       src: 'photos/11.jpg',
       title: 'Somewhere, Smiling',
-      date: 'September 2026',
+      date: 'July 2026',
       medium: 'Phone camera, priceless subject',
       note:
         'The museum’s insurers list this smile as the most valuable item in the building. ' +
@@ -142,8 +143,38 @@ export const MUSEUM = {
     {
       kind: 'photo',
       src: 'photos/12.jpg',
+      title: 'An Afternoon Outdoors',
+      date: 'August 2026',
+      medium: 'Natural light, good company',
+      note:
+        'Proof that the two of you can turn an ordinary afternoon into an exhibit. ' +
+        'The curator has no notes. It was perfect.',
+    },
+    {
+      kind: 'photo',
+      src: 'photos/13.jpg',
+      title: 'Reflection, Late August',
+      date: 'August 2026',
+      medium: 'Window glass, two show-offs',
+      note:
+        'A double portrait by way of the nearest reflective surface. Museum policy: any mirror within ten metres ' +
+        'of the two of you is automatically part of the collection.',
+    },
+    {
+      kind: 'photo',
+      src: 'photos/14.jpg',
+      title: 'Shades On, After Dark',
+      date: 'August 2026',
+      medium: 'Sunglasses indoors, no regrets',
+      note:
+        'Experts advise against wearing sunglasses at night. ' +
+        'The experts have clearly never looked this good doing it.',
+    },
+    {
+      kind: 'photo',
+      src: 'photos/15.jpg',
       title: 'Month Six',
-      date: 'October 2026',
+      date: 'September 2026',
       medium: 'The latest acquisition',
       note:
         'The newest piece in the collection, and proof that the collection is still growing. ' +
@@ -152,7 +183,7 @@ export const MUSEUM = {
     {
       kind: 'masterpiece',
       style: 'renaissance',
-      src: 'photos/13.jpg',
+      src: 'photos/16.jpg',
       title: 'La Gioconda di {her}',
       date: 'c. 2026',
       medium: 'Oil on canvas (allegedly). Phone camera (actually).',
@@ -164,7 +195,7 @@ export const MUSEUM = {
     {
       kind: 'masterpiece',
       style: 'gilded',
-      src: 'photos/14.jpg',
+      src: 'photos/17.jpg',
       title: 'The Kiss (after Klimt)',
       date: '2026',
       medium: 'Gold leaf, good lighting, a little luck',
@@ -176,7 +207,7 @@ export const MUSEUM = {
     {
       kind: 'masterpiece',
       style: 'surreal',
-      src: 'photos/15.jpg',
+      src: 'photos/18.jpg',
       title: 'The Persistence of Memory (Six Months)',
       date: '2026',
       medium: 'Melted clocks, oil on canvas, one unforgettable day',
