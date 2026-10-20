@@ -60,6 +60,29 @@ const buildFacade = (stoneMaterial) => {
   return facade;
 };
 
+/**
+ * The rest of the building seen from outside: side walls, roof and back.
+ * One-sided planes facing outward, so they vanish from inside the rooms.
+ */
+const buildMass = (stone) => {
+  const group = new THREE.Group();
+  const back = -82;
+  const depth = FACADE.front - FACADE.depth - back;
+  const midZ = back + depth / 2;
+  const half = FACADE.width / 2;
+  const plane = (w, h, position, rotation) => {
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), stone);
+    mesh.position.set(...position);
+    mesh.rotation.set(...rotation);
+    group.add(mesh);
+  };
+  plane(depth, FACADE.height, [-half, FACADE.height / 2, midZ], [0, -Math.PI / 2, 0]);
+  plane(depth, FACADE.height, [half, FACADE.height / 2, midZ], [0, Math.PI / 2, 0]);
+  plane(FACADE.width, depth, [0, FACADE.height, midZ], [-Math.PI / 2, 0, 0]);
+  plane(FACADE.width, FACADE.height, [0, FACADE.height / 2, back], [0, Math.PI, 0]);
+  return group;
+};
+
 const buildPediment = (stone, gold, base) => {
   const group = new THREE.Group();
   const half = PORTICO.x + 0.5;
@@ -195,6 +218,7 @@ export function buildExterior(materials, museum) {
   group.add(buildSky());
   group.add(buildGround(columnStone));
   group.add(buildFacade(stone));
+  group.add(buildMass(stone));
   group.add(buildPortico(materials, columnStone, museum));
   group.add(buildLamps(materials));
   const doors = buildDoors(materials);
