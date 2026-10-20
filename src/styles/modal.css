@@ -157,15 +157,12 @@
 
 .plan__layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: var(--space-5);
-  align-items: start;
+  gap: var(--space-4);
 }
 
 .plan__map {
   width: 100%;
   height: auto;
-  max-height: 62vh;
 }
 
 .plan__room {
@@ -206,7 +203,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  max-height: 62vh;
+  max-height: 38vh;
   overflow-y: auto;
 }
 
@@ -265,17 +262,10 @@
   color: var(--ivory);
 }
 
-@media (max-width: 640px) {
-  .plan__layout {
-    grid-template-columns: 1fr;
-  }
-
-  .plan__map {
-    max-height: 32vh;
-  }
-
+@media (min-width: 720px) {
   .plan__list {
-    max-height: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-3);
   }
 }
 
