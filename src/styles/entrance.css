@@ -109,6 +109,15 @@
   color: var(--ivory);
 }
 
+.ticket__dedication {
+  margin: 0;
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--gold);
+  font: italic 400 var(--text-md) / 1.35 var(--font-display);
+  color: var(--gold-bright);
+  text-wrap: balance;
+}
+
 .ticket__details {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));

@@ -12,11 +12,12 @@ const rubberband = (overshoot, dimension = 120, constant = 0.55) =>
   (overshoot * dimension * constant) / (dimension + constant * Math.abs(overshoot));
 
 const buildTicket = (museum) => {
+  const { dedication } = museum.ticket;
   const details = [
     ['Guest of honour', museum.herName],
     ['Ticket', museum.ticket.ticketClass],
     ['Validity', museum.ticket.validity],
-    ['Curated by', museum.yourName],
+    ...(dedication ? [] : [['Curated by', museum.yourName]]),
   ];
   const stub = el('button', { class: 'ticket__stub', type: 'button', 'aria-label': 'Tear off the stub to enter the museum' }, [
     el('span', { class: 'ticket__admit', text: museum.ticket.admit }),
@@ -28,6 +29,7 @@ const buildTicket = (museum) => {
       el('p', { class: 'ticket__eyebrow', text: 'Admission · After hours' }),
       el('h1', { class: 'ticket__title', id: 'ticket-title', text: museum.museumName }),
       el('p', { class: 'ticket__subtitle', text: museum.exhibitionTitle }),
+      dedication && el('p', { class: 'ticket__dedication', text: dedication }),
       el('dl', { class: 'ticket__details' }, details.map(([term, value]) => el('div', {}, [el('dt', { text: term }), el('dd', { text: value })]))),
     ]),
     stub,
