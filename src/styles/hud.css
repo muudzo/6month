@@ -21,6 +21,16 @@
   }
 }
 
+.hud::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: calc(var(--safe-top) + 150px);
+  background: linear-gradient(180deg, rgba(8, 6, 4, 0.62) 0%, rgba(8, 6, 4, 0.3) 55%, transparent 100%);
+  pointer-events: none;
+}
+
 .hud > * {
   pointer-events: auto;
 }

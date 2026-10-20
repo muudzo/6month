@@ -156,11 +156,11 @@ export function bannerSign({ top, big, bottom }) {
   ctx.strokeRect(24, 24, 352, 1072);
   ctx.textAlign = 'center';
   ctx.fillStyle = PALETTE.goldBright;
-  ctx.font = `500 30px ${FONTS.label}`;
-  drawTracked(ctx, top.toUpperCase(), 200, 120, 8, 'center');
-  ctx.font = `400 120px ${FONTS.display}`;
-  const lines = wrapText(ctx, big, 320);
-  lines.forEach((line, i) => ctx.fillText(line, 200, 420 + i * 132));
+  ctx.font = `500 24px ${FONTS.label}`;
+  drawTracked(ctx, top.toUpperCase(), 200, 120, 5, 'center');
+  ctx.font = `400 92px ${FONTS.display}`;
+  const lines = wrapText(ctx, big, 290);
+  lines.forEach((line, i) => ctx.fillText(line, 200, 420 + i * 108));
   ctx.fillStyle = PALETTE.ivory;
   ctx.font = `italic 400 52px ${FONTS.display}`;
   wrapText(ctx, bottom, 320).forEach((line, i) => ctx.fillText(line, 200, 900 + i * 60));
