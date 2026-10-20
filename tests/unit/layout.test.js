@@ -12,6 +12,8 @@ import {
   masterpieceSlots,
   fitSize,
   viewPointFor,
+  hangHeight,
+  GALLERY_FRAME_MIN_BOTTOM,
 } from '../../src/lib/layout.js';
 
 describe('floor plan', () => {
@@ -90,8 +92,8 @@ describe('floorHeightAt', () => {
 
 describe('exhibit slots', () => {
   test('gallery slots alternate walls and run deeper into the hall', () => {
-    const slots = gallerySlots(12);
-    expect(slots).toHaveLength(12);
+    const slots = gallerySlots(15);
+    expect(slots).toHaveLength(15);
     expect(slots[0].normal.x).toBe(1);
     expect(slots[1].normal.x).toBe(-1);
     for (let i = 1; i < slots.length; i += 1) {
@@ -107,8 +109,21 @@ describe('exhibit slots', () => {
   });
 
   test('requesting more slots than the walls hold throws', () => {
-    expect(() => gallerySlots(13)).toThrow();
+    expect(() => gallerySlots(16)).toThrow();
     expect(() => masterpieceSlots(4)).toThrow();
+  });
+});
+
+describe('hangHeight', () => {
+  test('keeps the usual height for frames that already clear the wainscot', () => {
+    const slot = gallerySlots(1)[0];
+    expect(hangHeight(slot, 1.2)).toBe(slot.position.y);
+  });
+
+  test('raises tall frames so their bottom edge clears the wainscot', () => {
+    const slot = gallerySlots(1)[0];
+    const y = hangHeight(slot, 2.1);
+    expect(y - 2.1 / 2).toBeCloseTo(GALLERY_FRAME_MIN_BOTTOM);
   });
 });
 

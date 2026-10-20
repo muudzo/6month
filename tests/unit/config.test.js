@@ -44,9 +44,9 @@ describe('validateConfig', () => {
     expect(validateConfig(baseConfig({ startDate: '2026-02-31' })).errors.join(' ')).toMatch(/startDate/);
   });
 
-  test('limits the collection to 12 photos and 3 masterpieces', () => {
-    const photos = Array.from({ length: 13 }, () => exhibit());
-    expect(validateConfig(baseConfig({ exhibits: photos })).errors.join(' ')).toMatch(/12 photos/);
+  test('limits the collection to 15 photos and 3 masterpieces', () => {
+    const photos = Array.from({ length: 16 }, () => exhibit());
+    expect(validateConfig(baseConfig({ exhibits: photos })).errors.join(' ')).toMatch(/15 photos/);
     const masterpieces = Array.from({ length: 4 }, () => exhibit({ kind: 'masterpiece' }));
     expect(validateConfig(baseConfig({ exhibits: masterpieces })).errors.join(' ')).toMatch(/3 masterpieces/);
   });
