@@ -29,7 +29,7 @@ export function buildHearts(materials) {
     holder.add(heart, glow, hit);
     holder.position.set(spot.x, spot.y, spot.z);
     group.add(holder);
-    state.set(spot.id, { holder, glowMaterial, phase: i * 1.3, collectedAt: null });
+    state.set(spot.id, { holder, glowMaterial, baseY: spot.y, phase: i * 1.3, collectedAt: null });
     return {
       id: spot.id,
       kind: 'heart',
@@ -51,7 +51,7 @@ export function buildHearts(materials) {
   const update = (t) => {
     clock = t;
     state.forEach((entry) => {
-      const { holder, glowMaterial, phase, collectedAt } = entry;
+      const { holder, glowMaterial, baseY, phase, collectedAt } = entry;
       if (collectedAt === null) {
         holder.children[0].rotation.y = t * 1.6 + phase;
         holder.children[0].position.y = Math.sin(t * 2 + phase) * 0.05;
@@ -60,7 +60,7 @@ export function buildHearts(materials) {
       }
       const progress = Math.min(1, (t - collectedAt) / COLLECT_SECONDS);
       holder.scale.setScalar(1 + progress * 1.5);
-      holder.position.y += 0.02 * (1 - progress);
+      holder.position.y = baseY + progress * 0.4;
       glowMaterial.opacity = 0.8 * (1 - progress);
       holder.children[0].visible = progress < 0.6;
       if (progress >= 1) holder.visible = false;
