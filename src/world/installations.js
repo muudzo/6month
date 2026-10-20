@@ -37,22 +37,35 @@ export function centerpieceWall(materials) {
   return group;
 }
 
+/** Painted panel with a gilt edge that sets wall lettering off the stone. */
+const titlePanel = (materials, width, height, color, x, y, z) => {
+  const group = new THREE.Group();
+  group.add(box(width + 0.1, height + 0.1, 0.03, materials.gold, 0, 0, 0.01));
+  group.add(box(width, height, 0.04, new THREE.MeshStandardMaterial({ color, roughness: 0.9 }), 0, 0, 0.02));
+  group.position.set(x, y, z);
+  return group;
+};
+
 /**
  * Lettering on the walls: welcome text, live counter and room headers.
  * @returns {{ group: THREE.Group, tick: (now: Date) => void }}
  */
-export function wallTexts(museum) {
+export function wallTexts(materials, museum) {
   const group = new THREE.Group();
   const lobby = room('lobby');
   const front = lobby.z0 + 0.03;
 
-  const welcome = signPlane(wallTextSign({ eyebrow: museum.museumName, title: museum.exhibitionTitle, body: museum.welcome }), 4.3);
-  welcome.position.set(-4.6, 3.7, front);
+  const welcomeSign = wallTextSign({ eyebrow: museum.museumName, title: museum.exhibitionTitle, body: museum.welcome });
+  const welcome = signPlane(welcomeSign, 4.3);
+  welcome.position.set(-4.6, 3.7, front + 0.02);
+  group.add(titlePanel(materials, 4.8, 4.3 / welcomeSign.aspect + 0.7, PALETTE.oxbloodDeep, -4.6, 3.7, front));
   group.add(welcome);
 
-  const counter = counterSign({ eyebrow: `Open since ${museum.startDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}` });
+  const since = museum.startDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  const counter = counterSign({ eyebrow: `Open since ${since}` });
   const counterPlane = signPlane(counter, 3.9);
-  counterPlane.position.set(4.6, 3.5, front);
+  counterPlane.position.set(4.6, 3.6, front + 0.02);
+  group.add(titlePanel(materials, 4.5, 3.9 / counter.aspect + 0.7, PALETTE.greenDeep, 4.6, 3.6, front));
   group.add(counterPlane);
 
   const headers = [
@@ -198,7 +211,7 @@ export function finale(materials) {
   envelope.position.y = 1.08;
   envelope.rotation.y = 0.18;
   group.add(envelope);
-  const glow = new THREE.Sprite(halo());
+  const glow = new THREE.Sprite(halo().clone());
   glow.scale.setScalar(1.4);
   glow.position.y = 1.15;
   group.add(glow);
