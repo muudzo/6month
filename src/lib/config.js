@@ -1,7 +1,7 @@
 import { parseLocalDate } from './dates.js';
 import { fillDeep } from './template.js';
 
-export const MAX_PHOTOS = 12;
+export const MAX_PHOTOS = 15;
 export const MAX_MASTERPIECES = 3;
 export const MAX_FUTURE = 4;
 export const PAINT_STYLES = Object.freeze(['renaissance', 'gilded', 'surreal']);

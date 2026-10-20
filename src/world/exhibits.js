@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { fitSize } from '../lib/layout.js';
+import { fitSize, hangHeight } from '../lib/layout.js';
 import { PALETTE } from './palette.js';
 import { createOrnateFrame, createPhotoFrame } from './frames.js';
 import { arcPoints, pictureLight, signStand, velvetRope } from './furniture.js';
@@ -61,6 +61,7 @@ export function buildPhotoExhibit({ exhibit, slot, photo, index, materials, anis
   const aspect = photo.canvas.width / photo.canvas.height;
   const { width, height } = fitSize(aspect, slot.maxWidth, slot.maxHeight);
   const frame = createPhotoFrame({ width, height, index, materials });
+  const hung = { ...slot, position: { ...slot.position, y: hangHeight(slot, frame.outerHeight) } };
   const group = new THREE.Group();
   group.add(wallWash(frame.outerWidth * 2.2, frame.outerHeight * 2.6, 0.32));
   group.add(frame.group);
@@ -75,16 +76,16 @@ export function buildPhotoExhibit({ exhibit, slot, photo, index, materials, anis
   group.add(pictureLight(materials, { width: frame.outerWidth * 0.55, top: frame.outerHeight / 2 }));
 
   const label = plaque(exhibit, 0.34);
-  label.position.set(frame.outerWidth / 2 + 0.34, WALL_LABEL_HEIGHT - slot.position.y, 0.01);
+  label.position.set(frame.outerWidth / 2 + 0.34, WALL_LABEL_HEIGHT - hung.position.y, 0.01);
   group.add(label);
 
   return {
     id: exhibit.id,
     kind: 'photo',
     data: exhibit,
-    object: place(group, slot),
+    object: place(group, hung),
     hitTargets: [picture, label],
-    slot,
+    slot: hung,
     size: { width: frame.outerWidth, height: frame.outerHeight },
     isPlaceholder: photo.isPlaceholder,
     setHover: (on) => pictureMaterial.color.setScalar(on ? PICTURE_LEVEL * 1.06 : PICTURE_LEVEL),

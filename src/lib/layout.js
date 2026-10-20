@@ -126,10 +126,12 @@ export function floorHeightAt(z) {
 
 export const STEPS = Object.freeze({ top: PORTICO_EDGE_Z, bottom: PLAZA_EDGE_Z, count: 4 });
 
-const GALLERY_CAPACITY = 12;
+const GALLERY_CAPACITY = 15;
 const WALL_OFFSET = 0.06;
-/** Centre height that keeps the largest framed photo clear of the 1.05 m wainscot. */
+/** Usual centre height for a framed photo, just above eye level. */
 const PHOTO_HANG_HEIGHT = 1.95;
+/** Lowest a frame's bottom edge may sit: clear of the 1.05 m wainscot and its rail. */
+export const GALLERY_FRAME_MIN_BOTTOM = 1.15;
 
 /**
  * Hanging positions in Gallery I, alternating left/right as you walk in.
@@ -148,9 +150,20 @@ export function gallerySlots(count) {
       normal: { x: isLeft ? 1 : -1, z: 0 },
       rotationY: isLeft ? Math.PI / 2 : -Math.PI / 2,
       maxWidth: 1.55,
-      maxHeight: 1.25,
+      maxHeight: 1.55,
     };
   });
+}
+
+/**
+ * Centre height for a frame of the given overall height: the slot's usual
+ * height, raised just enough that tall frames clear the wainscot.
+ * @param {{ position: { y: number } }} slot
+ * @param {number} frameHeight
+ * @returns {number}
+ */
+export function hangHeight(slot, frameHeight) {
+  return Math.max(slot.position.y, GALLERY_FRAME_MIN_BOTTOM + frameHeight / 2);
 }
 
 const MASTERPIECE_SLOTS = Object.freeze([
