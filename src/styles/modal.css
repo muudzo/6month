@@ -132,6 +132,10 @@
   transition: transform 420ms var(--ease-out-expo), opacity var(--dur);
 }
 
+.renewal__thanks:focus {
+  outline: none;
+}
+
 .renewal__thanks {
   margin: 0;
   font: italic 400 var(--text-lg) / 1.3 var(--font-display);

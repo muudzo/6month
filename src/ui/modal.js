@@ -10,17 +10,8 @@ export function createModal(root) {
   let onCloseHandler = null;
   let returnFocus = null;
 
-  const close = () => {
-    if (root.hidden) return;
-    root.hidden = true;
-    root.replaceChildren();
-    const handler = onCloseHandler;
-    onCloseHandler = null;
-    returnFocus?.focus?.({ preventScroll: true });
-    handler?.();
-  };
-
-  root.addEventListener('keydown', (event) => {
+  /** Escape and the Tab trap work wherever focus is, even if it fell back to <body>. */
+  const onKeyDown = (event) => {
     if (event.key === 'Escape') {
       event.stopPropagation();
       close();
@@ -31,14 +22,27 @@ export function createModal(root) {
     if (focusable.length === 0) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
+    const outside = !root.contains(document.activeElement);
+    if (event.shiftKey && (outside || document.activeElement === first)) {
       event.preventDefault();
       last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
+    } else if (!event.shiftKey && (outside || document.activeElement === last)) {
       event.preventDefault();
       first.focus();
     }
-  });
+  };
+
+  const close = () => {
+    if (root.hidden) return;
+    root.hidden = true;
+    root.replaceChildren();
+    document.removeEventListener('keydown', onKeyDown, true);
+    const handler = onCloseHandler;
+    onCloseHandler = null;
+    returnFocus?.focus?.({ preventScroll: true });
+    returnFocus = null;
+    handler?.();
+  };
 
   root.addEventListener('click', (event) => {
     if (event.target === root) close();
@@ -48,7 +52,10 @@ export function createModal(root) {
    * @param {{ label: string, panelClass: string, content: Node[], onClose?: () => void, closeLabel?: string }} options
    */
   const open = ({ label, panelClass, content, onClose, closeLabel = 'Close' }) => {
-    returnFocus = document.activeElement;
+    if (root.hidden) {
+      returnFocus = document.activeElement;
+      document.addEventListener('keydown', onKeyDown, true);
+    }
     onCloseHandler = onClose ?? null;
     const closeButton = el('button', { class: 'icon-btn modal__close', type: 'button', 'aria-label': closeLabel, onclick: close }, [icon('close')]);
     const panel = el('div', { class: `modal__panel ${panelClass}` }, [closeButton, ...content]);

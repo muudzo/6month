@@ -15,7 +15,7 @@ const dodge = (button, area) => {
 };
 
 const renewal = (museum, { alreadyRenewed, onRenew }) => {
-  const thanks = el('p', { class: 'renewal__thanks', role: 'status', text: museum.renewal.thanks });
+  const thanks = el('p', { class: 'renewal__thanks', role: 'status', tabindex: '-1', text: museum.renewal.thanks });
   if (alreadyRenewed) {
     return el('section', { class: 'renewal', 'aria-label': 'Membership' }, [el('p', { class: 'renewal__question', text: 'Membership status: renewed.' }), thanks]);
   }
@@ -26,6 +26,7 @@ const renewal = (museum, { alreadyRenewed, onRenew }) => {
   ]);
   const renew = () => {
     section.replaceChildren(el('p', { class: 'renewal__question', text: 'Membership status: renewed.' }), thanks);
+    thanks.focus({ preventScroll: true });
     onRenew();
   };
   let attempts = 0;
