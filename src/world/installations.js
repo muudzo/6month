@@ -69,13 +69,14 @@ export function wallTexts(materials, museum) {
   group.add(counterPlane);
 
   const headers = [
-    { sign: headerSign('Gallery I', 'The first six months'), width: 5.6, x: 0, y: 5.75, z: front },
+    { sign: headerSign('Gallery I', 'The first six months'), width: 5.6, x: 0, y: 5.75, z: front + 0.02, panel: PALETTE.ink },
     { sign: headerSign('The Masterpiece Salon', 'Three works of exceptional importance'), width: 4.4, x: 0, y: 5.3, z: room('gallery').z0 + 0.03 },
     { sign: headerSign('The Future Wing', 'Opening soon, and forever'), width: 5.4, x: 0, y: 5.6, z: room('salon').z0 + 0.03 },
   ];
-  headers.forEach(({ sign, width, x, y, z }) => {
+  headers.forEach(({ sign, width, x, y, z, panel }) => {
     const plane = signPlane(sign, width);
     plane.position.set(x, y, z);
+    if (panel) group.add(titlePanel(materials, width + 0.3, width / sign.aspect + 0.2, panel, x, y, z - 0.02));
     group.add(plane);
   });
 
