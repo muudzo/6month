@@ -191,7 +191,7 @@ const buildLightStrips = (room, glow) => {
   return group;
 };
 
-const flutedColumn = (height, radius, material, capMaterial) => {
+export const flutedColumn = (height, radius, material, capMaterial) => {
   const group = new THREE.Group();
   const shaft = new THREE.CylinderGeometry(radius * 0.92, radius, height - 1.1, 64, 1, true);
   const pos = shaft.attributes.position;
