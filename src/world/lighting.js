@@ -9,8 +9,8 @@ import { PALETTE } from './palette.js';
  */
 export function buildLighting(masterpieceSlots) {
   const group = new THREE.Group();
-  group.add(new THREE.HemisphereLight('#ffe7c4', '#20140c', 0.55));
-  group.add(new THREE.AmbientLight('#fff1dc', 0.12));
+  group.add(new THREE.HemisphereLight('#ffe7c4', '#20140c', 0.38));
+  group.add(new THREE.AmbientLight('#fff1dc', 0.1));
 
   const warm = (x, y, z, intensity, distance = 0) => {
     const light = new THREE.PointLight(PALETTE.warmLight, intensity, distance, 2);
@@ -19,15 +19,15 @@ export function buildLighting(masterpieceSlots) {
     return light;
   };
 
-  warm(0, 7.5, 22.5, 70);
-  warm(0, 5.3, 7, 70);
+  warm(0, 6.5, 23, 38);
+  warm(0, 6.4, 8.5, 48);
   warm(0, 5.4, -9, 32);
   warm(0, 5.4, -29, 32);
   warm(0, 7.4, -45.5, 110);
   warm(0, 4.8, -71, 30);
 
   masterpieceSlots.forEach(({ position, normal }) => {
-    const spot = new THREE.SpotLight(PALETTE.warmLight, 260, 0, 0.32, 0.55, 2);
+    const spot = new THREE.SpotLight(PALETTE.warmLight, 120, 0, 0.3, 0.65, 2);
     spot.position.set(position.x + normal.x * 5.5, 9.4, position.z + normal.z * 5.5);
     spot.target.position.set(position.x, position.y, position.z);
     group.add(spot, spot.target);

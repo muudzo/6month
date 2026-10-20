@@ -6,7 +6,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { omegaFromResponse, stepSpring } from '../lib/spring.js';
 
 const FOV = 58;
-const BLOOM = Object.freeze({ strength: 0.5, radius: 0.55, threshold: 0.95 });
+const BLOOM = Object.freeze({ strength: 0.4, radius: 0.5, threshold: 1.05 });
 const SHIFT_OMEGA = omegaFromResponse(0.45);
 
 /** Phones and small tablets skip bloom and render at a lower pixel ratio. */

@@ -190,8 +190,8 @@ const buildLamps = (materials) => {
  */
 export function buildExterior(materials, museum) {
   const group = new THREE.Group();
-  const stone = new THREE.MeshStandardMaterial({ map: withRepeat(toTexture(limestoneCanvas(53)), 0.5, 1), roughness: 0.85 });
-  const columnStone = new THREE.MeshStandardMaterial({ color: '#d9cfbb', roughness: 0.7 });
+  const stone = new THREE.MeshStandardMaterial({ color: '#a89c88', map: withRepeat(toTexture(limestoneCanvas(53)), 0.5, 1), roughness: 0.85 });
+  const columnStone = new THREE.MeshStandardMaterial({ color: '#bdb29e', roughness: 0.7 });
   group.add(buildSky());
   group.add(buildGround(columnStone));
   group.add(buildFacade(stone));

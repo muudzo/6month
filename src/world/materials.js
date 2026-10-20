@@ -15,7 +15,7 @@ export function createMaterials() {
     matBoard: new THREE.MeshStandardMaterial({ color: '#f1e9d8', roughness: 0.95 }),
     velvet: new THREE.MeshPhysicalMaterial({ color: PALETTE.velvet, roughness: 0.8, sheen: 1, sheenColor: '#ff8a9a' }),
     leather: new THREE.MeshStandardMaterial({ color: '#4a1a1c', roughness: 0.6 }),
-    marbleWhite: new THREE.MeshStandardMaterial({ color: '#f4efe7', roughness: 0.22, metalness: 0 }),
+    marbleWhite: new THREE.MeshStandardMaterial({ color: '#e6e0d6', roughness: 0.34, metalness: 0 }),
     marbleFloor: new THREE.MeshStandardMaterial({ map: marble, roughness: 0.28 }),
     stone: new THREE.MeshStandardMaterial({ color: PALETTE.limestone, roughness: 0.85 }),
     stoneDark: new THREE.MeshStandardMaterial({ color: PALETTE.limestoneDark, roughness: 0.9 }),
