@@ -37,6 +37,9 @@ export function centerpieceWall(materials) {
   return group;
 }
 
+/** Lettering sits just proud of a title panel's painted face. */
+const PANEL_FACE = 0.07;
+
 /** Painted panel with a gilt edge that sets wall lettering off the stone. */
 const titlePanel = (materials, width, height, color, x, y, z) => {
   const group = new THREE.Group();
@@ -57,26 +60,26 @@ export function wallTexts(materials, museum) {
 
   const welcomeSign = wallTextSign({ eyebrow: museum.museumName, title: museum.exhibitionTitle, body: museum.welcome });
   const welcome = signPlane(welcomeSign, 4.3);
-  welcome.position.set(-4.6, 3.7, front + 0.02);
+  welcome.position.set(-4.6, 3.7, front + PANEL_FACE);
   group.add(titlePanel(materials, 4.8, 4.3 / welcomeSign.aspect + 0.7, PALETTE.oxbloodDeep, -4.6, 3.7, front));
   group.add(welcome);
 
   const since = museum.startDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
   const counter = counterSign({ eyebrow: `Open since ${since}` });
   const counterPlane = signPlane(counter, 3.9);
-  counterPlane.position.set(4.6, 3.6, front + 0.02);
+  counterPlane.position.set(4.6, 3.6, front + PANEL_FACE);
   group.add(titlePanel(materials, 4.5, 3.9 / counter.aspect + 0.7, PALETTE.greenDeep, 4.6, 3.6, front));
   group.add(counterPlane);
 
   const headers = [
-    { sign: headerSign('Gallery I', 'The first six months'), width: 5.6, x: 0, y: 5.75, z: front + 0.02, panel: PALETTE.ink },
+    { sign: headerSign('Gallery I', 'The first six months'), width: 5.6, x: 0, y: 5.75, z: front, panel: PALETTE.ink },
     { sign: headerSign('The Masterpiece Salon', 'Three works of exceptional importance'), width: 4.4, x: 0, y: 5.3, z: room('gallery').z0 + 0.03 },
     { sign: headerSign('The Future Wing', 'Opening soon, and forever'), width: 5.4, x: 0, y: 5.6, z: room('salon').z0 + 0.03 },
   ];
   headers.forEach(({ sign, width, x, y, z, panel }) => {
     const plane = signPlane(sign, width);
-    plane.position.set(x, y, z);
-    if (panel) group.add(titlePanel(materials, width + 0.3, width / sign.aspect + 0.2, panel, x, y, z - 0.02));
+    plane.position.set(x, y, panel ? z + PANEL_FACE : z);
+    if (panel) group.add(titlePanel(materials, width + 0.3, width / sign.aspect + 0.2, panel, x, y, z));
     group.add(plane);
   });
 
@@ -87,8 +90,8 @@ export function wallTexts(materials, museum) {
     body: 'This wing is still under construction. Expected completion date: never. That is the whole point.',
     color: PALETTE.ink,
     accent: PALETTE.goldDeep,
-  }), 4.6);
-  ending.position.set(0, 3.3, future.z0 + 0.03);
+  }), 6.6);
+  ending.position.set(0, 3.2, future.z0 + 0.03);
   group.add(ending);
 
   let lastSecond = -1;
