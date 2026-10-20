@@ -7,3 +7,4 @@ playwright-report
 
 # Original photos (full size, with location metadata). The site uses the cleaned copies in public/photos.
 images/
+.vercel

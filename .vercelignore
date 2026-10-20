@@ -1,0 +1,8 @@
+# Original photos still carry GPS location data; only public/photos (cleaned) is deployed.
+images/
+node_modules/
+dist/
+coverage/
+test-results/
+playwright-report/
+tests/
