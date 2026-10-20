@@ -128,6 +128,8 @@ export const STEPS = Object.freeze({ top: PORTICO_EDGE_Z, bottom: PLAZA_EDGE_Z, 
 
 const GALLERY_CAPACITY = 12;
 const WALL_OFFSET = 0.06;
+/** Centre height that keeps the largest framed photo clear of the 1.05 m wainscot. */
+const PHOTO_HANG_HEIGHT = 1.95;
 
 /**
  * Hanging positions in Gallery I, alternating left/right as you walk in.
@@ -142,11 +144,11 @@ export function gallerySlots(count) {
   return Array.from({ length: count }, (_, i) => {
     const isLeft = i % 2 === 0;
     return {
-      position: { x: isLeft ? room.x0 + WALL_OFFSET : room.x1 - WALL_OFFSET, y: 1.65, z: first - i * step },
+      position: { x: isLeft ? room.x0 + WALL_OFFSET : room.x1 - WALL_OFFSET, y: PHOTO_HANG_HEIGHT, z: first - i * step },
       normal: { x: isLeft ? 1 : -1, z: 0 },
       rotationY: isLeft ? Math.PI / 2 : -Math.PI / 2,
-      maxWidth: 1.7,
-      maxHeight: 1.45,
+      maxWidth: 1.55,
+      maxHeight: 1.25,
     };
   });
 }
