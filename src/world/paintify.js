@@ -60,6 +60,7 @@ const FINISH_FRAGMENT = /* glsl */ `
   uniform sampler2D tMap;
   uniform vec2 uResolution;
   uniform int uStyle;
+  uniform float uGain;
   varying vec2 vUv;
 
   float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -98,6 +99,7 @@ const FINISH_FRAGMENT = /* glsl */ `
     vec2 smear = vec2(noise(vUv * vec2(18.0, 60.0)), noise(vUv * vec2(60.0, 18.0) + 7.0)) - 0.5;
     vec3 linear = texture2D(tMap, vUv + smear * 0.004).rgb;
     vec3 g = pow(max(linear, 0.0), vec3(1.0 / 2.2));
+    g = 1.0 - pow(1.0 - clamp(g, 0.0, 1.0), vec3(uGain));
     float l = dot(g, vec3(0.299, 0.587, 0.114));
     float vig = smoothstep(0.35, 0.95, length((vUv - 0.5) * vec2(1.0, 1.15)) * 1.3);
     float crackStrength = 0.38;
@@ -107,7 +109,7 @@ const FINISH_FRAGMENT = /* glsl */ `
       g = mix(vec3(l), g, 0.62);
       g *= vec3(1.06, 0.97, 0.72);
       g = mix(vec3(0.09, 0.07, 0.035), vec3(0.98, 0.9, 0.7), g);
-      g = mix(g, g * vec3(0.5, 0.46, 0.3), vig);
+      g = mix(g, g * vec3(0.64, 0.58, 0.42), vig);
     } else if (uStyle == 1) {
       g = mix(vec3(l), g, 0.75);
       g = mix(g, vec3(1.0, 0.78, 0.36) * (0.35 + l * 0.9), 0.42);
@@ -158,10 +160,10 @@ const renderPass = (renderer, material, target) => {
  * Turn a photo into an oil painting on the GPU (runs once per masterpiece).
  * @param {THREE.WebGLRenderer} renderer
  * @param {THREE.Texture} photo sRGB photo texture
- * @param {{ width: number, height: number, style: string }} options
+ * @param {{ width: number, height: number, style: string, gain?: number }} options gain lifts dark photos (1 = as shot)
  * @returns {THREE.Texture} the painted texture, or the photo if the GPU refuses
  */
-export function paintify(renderer, photo, { width, height, style }) {
+export function paintify(renderer, photo, { width, height, style, gain = 1 }) {
   const { w, h } = fitWithin(width, height, PAINT_SIZE);
   const previousTarget = renderer.getRenderTarget();
   const options = { type: renderTargetType(renderer), depthBuffer: false };
@@ -182,6 +184,7 @@ export function paintify(renderer, photo, { width, height, style }) {
         tMap: { value: flattened.texture },
         uResolution: { value: new THREE.Vector2(w, h) },
         uStyle: { value: Math.max(0, PAINT_STYLES.indexOf(style)) },
+        uGain: { value: gain },
       },
       vertexShader: FULLSCREEN_VERTEX,
       fragmentShader: FINISH_FRAGMENT,

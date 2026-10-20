@@ -1,11 +1,12 @@
 import * as THREE from 'three';
+import { exposureGain, meanLuminance } from '../lib/exposure.js';
 import { fitSize, hangHeight } from '../lib/layout.js';
 import { PALETTE } from './palette.js';
 import { createOrnateFrame, createPhotoFrame } from './frames.js';
 import { arcPoints, pictureLight, signStand, velvetRope } from './furniture.js';
 import { masterpieceMaterial, paintify } from './paintify.js';
 import { plaqueSign } from './signage.js';
-import { toTexture, wallWashCanvas } from './textures.js';
+import { makeCanvas, toTexture, wallWashCanvas } from './textures.js';
 
 /** Photo whites stay below the bloom threshold, so pictures never glow. */
 const PICTURE_LEVEL = 1;
@@ -37,6 +38,16 @@ const photoTexture = (canvas, anisotropy) => {
     canvas.height = 1;
   };
   return texture;
+};
+
+const BRIGHTNESS_SAMPLE_PX = 48;
+
+/** Average brightness of a photo, from a small downscaled copy. */
+const sampleBrightness = (canvas) => {
+  const small = makeCanvas(BRIGHTNESS_SAMPLE_PX, BRIGHTNESS_SAMPLE_PX);
+  const ctx = small.getContext('2d', { willReadFrequently: true });
+  ctx.drawImage(canvas, 0, 0, BRIGHTNESS_SAMPLE_PX, BRIGHTNESS_SAMPLE_PX);
+  return meanLuminance(ctx.getImageData(0, 0, BRIGHTNESS_SAMPLE_PX, BRIGHTNESS_SAMPLE_PX).data);
 };
 
 const plaque = (exhibit, width) => {
@@ -149,8 +160,9 @@ const barrierFor = (slotIndex, slot) => {
 export function buildMasterpiece({ exhibit, slot, slotIndex, photo, renderer, materials, anisotropy }) {
   const aspect = photo.canvas.width / photo.canvas.height;
   const { width, height } = fitSize(aspect, slot.maxWidth, slot.maxHeight);
+  const gain = exposureGain(sampleBrightness(photo.canvas));
   const photoTex = photoTexture(photo.canvas, anisotropy);
-  const painting = paintify(renderer, photoTex, { width: photo.canvas.width, height: photo.canvas.height, style: exhibit.style });
+  const painting = paintify(renderer, photoTex, { width: photo.canvas.width, height: photo.canvas.height, style: exhibit.style, gain });
   painting.anisotropy = anisotropy;
   const material = masterpieceMaterial(photoTex, painting);
 
