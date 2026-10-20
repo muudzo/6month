@@ -145,8 +145,8 @@ export function sculpture(materials, museum) {
     data: { ...museum.sculpture, eyebrow: 'Sculpture · The Grand Lobby' },
     object: group,
     hitTargets: [heart, label],
-    slot: { position: { x: SCULPTURE.x, y: 1.6, z: SCULPTURE.z }, normal: { x: 0, z: 1 } },
-    size: { width: 1.4, height: 1.6 },
+    slot: { position: { x: SCULPTURE.x, y: 1.5, z: SCULPTURE.z }, normal: { x: 0, z: 1 } },
+    size: { width: 2.4, height: 2.6 },
     setHover: (on) => heart.scale.setScalar(on ? 1.04 : 1),
     update: (t) => {
       heart.rotation.y = Math.sin(t * 0.35) * 0.6;
