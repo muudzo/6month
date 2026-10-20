@@ -58,6 +58,7 @@ export function createHud(roots, { museumName, soundOn, onMap, onSound }) {
   );
 
   let toastTimer = null;
+  let toastHideTimer = null;
   let currentRoom = '';
   let currentPrompt = '';
 
@@ -90,13 +91,14 @@ export function createHud(roots, { museumName, soundOn, onMap, onSound }) {
       roots.prompt.hidden = !text;
     },
     toast: (message) => {
+      window.clearTimeout(toastTimer);
+      window.clearTimeout(toastHideTimer);
       roots.toast.textContent = message;
       roots.toast.hidden = false;
       requestAnimationFrame(() => roots.toast.classList.add('is-visible'));
-      window.clearTimeout(toastTimer);
       toastTimer = window.setTimeout(() => {
         roots.toast.classList.remove('is-visible');
-        window.setTimeout(() => {
+        toastHideTimer = window.setTimeout(() => {
           roots.toast.hidden = true;
         }, 400);
       }, TOAST_MS);
