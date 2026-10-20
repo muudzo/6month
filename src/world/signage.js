@@ -42,7 +42,7 @@ export function drawTracked(ctx, text, x, y, tracking, align = 'left') {
 const finish = (canvas) => ({ texture: toTexture(canvas, { wrap: false }), aspect: canvas.width / canvas.height, canvas });
 
 /** Ivory exhibit label hung beside each photograph. */
-export function plaqueSign({ number, title, date, medium }) {
+export function plaqueSign({ number, eyebrow, title, date, medium }) {
   const canvas = makeCanvas(720, 450);
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = PALETTE.ivory;
@@ -52,7 +52,7 @@ export function plaqueSign({ number, title, date, medium }) {
   ctx.strokeRect(14, 14, 692, 422);
   ctx.fillStyle = PALETTE.goldDeep;
   ctx.font = `500 26px ${FONTS.label}`;
-  drawTracked(ctx, `NO. ${String(number).padStart(2, '0')}`, 48, 76, 6);
+  drawTracked(ctx, (eyebrow ?? `No. ${String(number).padStart(2, '0')}`).toUpperCase(), 48, 76, 6);
   ctx.fillStyle = PALETTE.ink;
   ctx.font = `italic 400 46px ${FONTS.display}`;
   const lines = wrapText(ctx, title, 620).slice(0, 3);
@@ -184,6 +184,27 @@ export function standSign({ eyebrow, lines }) {
   ctx.font = `italic 400 40px ${FONTS.display}`;
   const wrapped = lines.flatMap((line) => wrapText(ctx, line, 540));
   wrapped.slice(0, 6).forEach((line, i) => ctx.fillText(line, 320, 150 + i * 50));
+  return finish(canvas);
+}
+
+/** Bare linen in an empty frame, waiting for a future photo. */
+export function reservedSign(title) {
+  const canvas = makeCanvas(1000, 760);
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#2b2622';
+  ctx.fillRect(0, 0, 1000, 760);
+  for (let i = 0; i < 1000; i += 3) {
+    ctx.fillStyle = 'rgba(255,255,255,0.025)';
+    ctx.fillRect(i, 0, 1, 760);
+    ctx.fillRect(0, i, 1000, 1);
+  }
+  ctx.textAlign = 'center';
+  ctx.fillStyle = rgba(PALETTE.gold, 0.85);
+  ctx.font = `500 30px ${FONTS.label}`;
+  drawTracked(ctx, 'RESERVED FOR', 500, 330, 10, 'center');
+  ctx.fillStyle = rgba(PALETTE.ivory, 0.9);
+  ctx.font = `italic 400 64px ${FONTS.display}`;
+  wrapText(ctx, title, 820).slice(0, 2).forEach((line, i) => ctx.fillText(line, 500, 420 + i * 74));
   return finish(canvas);
 }
 
