@@ -19,7 +19,7 @@ export function createInteraction({ camera, surface, interactables, occluders })
   const pointer = new THREE.Vector2();
   const owners = new Map();
   interactables.forEach((item) => item.hitTargets.forEach((mesh) => owners.set(mesh, item)));
-  const targets = [...owners.keys()];
+  const pickables = [...owners.keys(), ...occluders];
   let enabled = new Set(interactables.map((item) => item.id));
   let hovered = null;
   let probeClock = 0;
@@ -29,7 +29,7 @@ export function createInteraction({ camera, surface, interactables, occluders })
     pointer.set(ndcX, ndcY);
     raycaster.setFromCamera(pointer, camera);
     raycaster.far = far;
-    const hits = raycaster.intersectObjects([...targets, ...occluders], true);
+    const hits = raycaster.intersectObjects(pickables, true);
     const first = hits.find((hit) => {
       const owner = owners.get(hit.object);
       if (owner) return enabled.has(owner.id);

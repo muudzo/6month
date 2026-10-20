@@ -281,7 +281,7 @@ export function startExperience({ stage, world, museum }) {
     if (player.mode === 'locked') player.setPose({ yaw: OUTSIDE_POSE.yaw + Math.sin(t * 0.15) * 0.05 });
     intro?.update(t);
     player.update(dt);
-    world.update(t, dt);
+    world.update(t, dt, player.pose);
     const busy = modal.isOpen || placard.isOpen || player.mode === 'glide' || player.mode === 'locked';
     hud.setPrompt(busy ? '' : promptFor(interaction.probe(dt), coarse));
     hud.setRoom(roomAt(player.pose.x, player.pose.z)?.name);

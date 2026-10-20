@@ -103,12 +103,13 @@ export async function createWorld({ renderer, museum, onProgress }) {
     hearts,
     missingPhotos: tour.filter((item) => item.isPlaceholder).length,
     setDoorsOpen: exterior.setDoorsOpen,
-    update: (t, dt) => {
+    /** @param {number} t @param {number} dt @param {{ z: number }} viewer */
+    update: (t, dt, viewer) => {
       texts.tick(new Date());
       lobbySculpture.update(t);
       letter.update(t);
       hearts.update(t);
-      dust.update(t, dt);
+      if (viewer.z < SALON_DUST.z1 + 4) dust.update(t, dt);
     },
   };
 }
