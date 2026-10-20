@@ -6,26 +6,30 @@ are turned into oil-painting "masterpieces", and the Future Wing at the end hold
 
 ## Make it yours (about 20 minutes)
 
-### 1. Add 15 photos
+### 1. Photos
 
-Put them in `public/photos/`, named `01.jpg` to `15.jpg`, oldest first.
+The 18 photos live in `public/photos/`, named `01.jpg` to `18.jpg`.
 
 | Files | Where they hang |
 | --- | --- |
-| `01.jpg` – `12.jpg` | Gallery I, in order, alternating left and right walls |
-| `13.jpg` | The centrepiece, *La Gioconda*: a portrait of her works best |
-| `14.jpg` | *The Kiss (after Klimt)*: a photo of the two of you |
-| `15.jpg` | *The Persistence of Memory*: a fun or dreamy one |
+| `01.jpg` – `15.jpg` | Gallery I, oldest first, alternating left and right walls |
+| `16.jpg` | The centrepiece, *La Gioconda*: a portrait of her works best |
+| `17.jpg` | *The Kiss (after Klimt)*: a photo of the two of you |
+| `18.jpg` | *The Persistence of Memory*: a fun or dreamy one |
 
-- JPG, PNG or WebP. iPhone HEIC photos won't load: in Photos, choose **File → Export → Export 1 Photo** as JPEG.
-- Any size or orientation works. They're scaled down automatically, and frames fit each photo's shape.
-- A missing photo shows a painted placeholder, so you can preview before everything is ready.
+- To swap a photo, replace its file and keep the name. JPG, PNG or WebP all work. iPhone HEIC photos won't
+  load: in Photos, choose **File → Export → Export 1 Photo** as JPEG.
+- Frames are shaped to each photo, portrait or landscape. Large photos are scaled down when the museum loads.
+- Photos straight off a phone carry hidden location data. The ones in `public/photos/` were cleaned of it. Your
+  originals in `images/` still have it, so that folder is kept out of git and the site never uses it.
+- A missing photo shows a painted placeholder.
 
 ### 2. Edit `src/config/museum.js`
 
 This is the only file you need to touch.
 
 - `herName`, `yourName`: appear on the ticket, banners, labels and letter.
+- `ticket.dedication`: the line on the admission ticket under the title.
 - `startDate`: the day it began (`YYYY-MM-DD`). Drives the live "days, and counting" counter in the lobby.
 - Each exhibit's `title`, `date`, `medium` and `note`. The notes are written in a pompous-curator voice to start
   you off. Rewrite them with real memories; that's what will make her smile.
