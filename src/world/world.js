@@ -55,7 +55,8 @@ export async function createWorld({ renderer, museum, onProgress }) {
   scene.add(architecture);
   const exterior = buildExterior(materials, museum);
   scene.add(exterior.group);
-  scene.add(centerpieceWall(materials));
+  const freestandingWall = centerpieceWall(materials);
+  scene.add(freestandingWall);
   const texts = wallTexts(materials, museum);
   scene.add(texts.group);
   furnish(scene, materials);
@@ -98,7 +99,7 @@ export async function createWorld({ renderer, museum, onProgress }) {
     scene,
     tour,
     interactables,
-    occluders: [architecture, exterior.group],
+    occluders: [architecture, exterior.group, freestandingWall],
     hearts,
     missingPhotos: tour.filter((item) => item.isPlaceholder).length,
     setDoorsOpen: exterior.setDoorsOpen,
