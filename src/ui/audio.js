@@ -203,6 +203,17 @@ export function createAudio({ musicUrl, enabled: initiallyEnabled }) {
     get enabled() {
       return enabled;
     },
+    /** Pause everything while the tab is hidden, resume when it returns. */
+    setSuspended: (suspended) => {
+      if (!ctx) return;
+      if (suspended) {
+        ctx.suspend();
+        music?.pause();
+      } else {
+        ctx.resume();
+        music?.play().catch(() => {});
+      }
+    },
     stop: () => {
       window.clearInterval(timer);
       music?.pause();
