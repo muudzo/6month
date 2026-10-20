@@ -7,8 +7,8 @@ import { masterpieceMaterial, paintify } from './paintify.js';
 import { plaqueSign } from './signage.js';
 import { toTexture, wallWashCanvas } from './textures.js';
 
-/** Keeps photo whites just under the bloom threshold so pictures never glow. */
-const PICTURE_LEVEL = 0.94;
+/** Photo whites stay below the bloom threshold, so pictures never glow. */
+const PICTURE_LEVEL = 1;
 const WALL_LABEL_HEIGHT = 1.42;
 
 let washTexture = null;
@@ -62,7 +62,6 @@ export function buildPhotoExhibit({ exhibit, slot, photo, index, materials, anis
   const pictureMaterial = new THREE.MeshBasicMaterial({
     map: photoTexture(photo.canvas, anisotropy),
     color: new THREE.Color().setScalar(PICTURE_LEVEL),
-    toneMapped: false,
   });
   const picture = new THREE.Mesh(new THREE.PlaneGeometry(width, height), pictureMaterial);
   picture.position.z = frame.photoZ;

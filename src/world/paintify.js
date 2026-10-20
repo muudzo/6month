@@ -223,10 +223,11 @@ export function masterpieceMaterial(photo, painting) {
       varying vec2 vUv;
       void main() {
         float edge = vUv.x - uReveal;
-        vec3 color = edge < 0.0 ? texture2D(tPhoto, vUv).rgb * 0.94 : texture2D(tPaint, vUv).rgb;
+        vec3 color = edge < 0.0 ? texture2D(tPhoto, vUv).rgb : texture2D(tPaint, vUv).rgb;
         float seam = (1.0 - smoothstep(0.0, 0.004, abs(edge))) * step(0.002, uReveal) * step(uReveal, 0.998);
         color = mix(color, vec3(1.0, 0.78, 0.38), seam);
         gl_FragColor = vec4(color * (1.0 + uGlow * 0.08), 1.0);
+        #include <tonemapping_fragment>
         #include <colorspace_fragment>
       }
     `,

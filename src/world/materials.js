@@ -20,9 +20,9 @@ export function createMaterials() {
     stone: new THREE.MeshStandardMaterial({ color: PALETTE.limestone, roughness: 0.85 }),
     stoneDark: new THREE.MeshStandardMaterial({ color: PALETTE.limestoneDark, roughness: 0.9 }),
     candle: new THREE.MeshStandardMaterial({ color: '#f6eedd', roughness: 0.6 }),
-    flame: new THREE.MeshBasicMaterial({ color: new THREE.Color(PALETTE.warmLight).multiplyScalar(4), toneMapped: false }),
+    flame: new THREE.MeshBasicMaterial({ color: new THREE.Color(PALETTE.warmLight).multiplyScalar(4) }),
     crystal: new THREE.MeshStandardMaterial({ color: '#fff7ea', metalness: 0.2, roughness: 0.05, transparent: true, opacity: 0.75 }),
-    glowWarm: new THREE.MeshBasicMaterial({ color: new THREE.Color(PALETTE.warmLight).multiplyScalar(2.2), toneMapped: false }),
+    glowWarm: new THREE.MeshBasicMaterial({ color: new THREE.Color(PALETTE.warmLight).multiplyScalar(2.2) }),
     heart: new THREE.MeshStandardMaterial({
       color: PALETTE.rose,
       emissive: new THREE.Color(PALETTE.rose),
