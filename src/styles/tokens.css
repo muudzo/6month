@@ -1,0 +1,61 @@
+/*
+ * A museum after closing time: gilt and candlelight on oxblood, bottle green
+ * and marble. Bodoni Moda (display, high-contrast Didone) with Jost (labels,
+ * a geometric sans in the spirit of museum signage). Committed to one dark look.
+ */
+:root {
+  --ink: #0f0b09;
+  --ink-raised: #1a1310;
+  --ivory: #f3ead6;
+  --ivory-dim: rgba(243, 234, 214, 0.72);
+  --paper: #f6efdf;
+  --paper-edge: #e4d6b8;
+  --gold: #c9a14a;
+  --gold-bright: #f0d488;
+  --gold-deep: #7a5a22;
+  --oxblood: #6a1a24;
+  --oxblood-deep: #3d0e15;
+  --green-deep: #122a22;
+  --rose: #ff4f7b;
+  --glass: rgba(20, 14, 11, 0.6);
+  --glass-strong: rgba(20, 14, 11, 0.86);
+  --glass-edge: rgba(240, 212, 136, 0.24);
+  --scrim: rgba(6, 4, 3, 0.62);
+
+  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --font-label: "Jost", "Futura", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: clamp(1.25rem, 1.05rem + 0.8vw, 1.6rem);
+  --text-xl: clamp(1.7rem, 1.3rem + 1.8vw, 2.6rem);
+  --text-hero: clamp(2.2rem, 1.2rem + 4.4vw, 4.4rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  --radius-chip: 999px;
+  --radius-card: 6px;
+
+  --dur-press: 100ms;
+  --dur-fast: 180ms;
+  --dur: 320ms;
+  --dur-slow: 700ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-expo: cubic-bezier(0.7, 0, 0.84, 0);
+
+  --gutter-left: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-right: max(16px, env(safe-area-inset-right, 0px));
+  --safe-top: max(12px, env(safe-area-inset-top, 0px));
+  --safe-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+
+  color-scheme: dark;
+}

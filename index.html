@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>The Museum of Us</title>
+    <meta name="description" content="A private museum of our first six months, open after hours for one guest." />
+    <meta name="theme-color" content="#0b0806" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23c9a14a' d='M16 28C6 21 2 15 4.5 9.5 7 4.5 13 5 16 10c3-5 9-5.5 11.5-.5C30 15 26 21 16 28z'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Jost:wght@400;500&display=swap"
+    />
+  </head>
+  <body>
+    <main class="museum" aria-label="The Museum of Us">
+      <div id="stage" class="stage"></div>
+      <div class="vignette" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
+    </main>
+
+    <section id="loader" class="loader" aria-live="polite" aria-label="Loading the museum">
+      <p class="loader__eyebrow">After hours</p>
+      <p class="loader__title">The curator is lighting the candles</p>
+      <div class="loader__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <span class="loader__fill"></span>
+      </div>
+    </section>
+
+    <section id="entrance" class="entrance" aria-labelledby="ticket-title" hidden></section>
+
+    <header id="hud" class="hud" hidden></header>
+    <p id="prompt" class="prompt" aria-live="polite" hidden></p>
+    <div id="joystick" class="joystick" aria-hidden="true" hidden><span class="joystick__knob"></span></div>
+
+    <aside id="placard" class="placard" aria-labelledby="placard-title" hidden></aside>
+    <div id="modal" class="modal" hidden></div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+    <div id="curtain" class="curtain" aria-hidden="true"></div>
+
+    <noscript>
+      <p class="noscript">The Museum of Us needs JavaScript switched on to open its doors.</p>
+    </noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
