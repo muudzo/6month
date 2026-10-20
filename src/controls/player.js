@@ -30,6 +30,8 @@ const yawToward = (from, to) => Math.atan2(from.x - to.x, from.z - to.z);
 const pitchToward = (from, to) => Math.atan2(to.y - from.y, Math.hypot(to.x - from.x, to.z - from.z));
 const blendAngle = (a, b, t) => a + shortestAngle(a, b) * t;
 const isTyping = (target) => target instanceof HTMLElement && (target.isContentEditable || /INPUT|TEXTAREA|SELECT/.test(target.tagName));
+/** Arrow keys inside an overlay scroll it or move a slider; they must not walk. */
+const isOverlayArrow = (event) => event.code.startsWith('Arrow') && event.target instanceof Element && event.target.closest('.placard, .modal');
 
 /**
  * First-person visitor: walking, looking, tapping and gliding between exhibits.
@@ -42,9 +44,10 @@ const isTyping = (target) => target instanceof HTMLElement && (target.isContentE
  *   onHover: (x: number, y: number) => void,
  *   onInterrupt: () => void,
  *   onTeleport: (swap: () => void) => void,
+ *   isInputBlocked: () => boolean,
  * }} options
  */
-export function createPlayer({ camera, surface, joystick, reducedMotion, onTap, onHover, onInterrupt, onTeleport }) {
+export function createPlayer({ camera, surface, joystick, reducedMotion, onTap, onHover, onInterrupt, onTeleport, isInputBlocked }) {
   let pose = { x: 0, z: 30, yaw: 0, pitch: 0.04 };
   let velocity = { x: { value: 0, velocity: 0 }, z: { value: 0, velocity: 0 } };
   let eye = { value: EYE_HEIGHT, velocity: 0 };
@@ -70,7 +73,7 @@ export function createPlayer({ camera, surface, joystick, reducedMotion, onTap, 
   };
 
   const onKeyDown = (event) => {
-    if (isTyping(event.target) || event.metaKey || event.ctrlKey) return;
+    if (isTyping(event.target) || event.metaKey || event.ctrlKey || isInputBlocked() || isOverlayArrow(event)) return;
     keys.add(event.code);
   };
   const onKeyUp = (event) => keys.delete(event.code);

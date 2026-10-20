@@ -189,6 +189,7 @@ export function startExperience({ stage, world, museum }) {
     surface: stage.canvas,
     joystick,
     reducedMotion,
+    isInputBlocked: () => modal.isOpen,
     onTeleport: teleport,
     onInterrupt: () => placard.close(),
     onHover: (x, y) => {
