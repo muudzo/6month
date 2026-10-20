@@ -30,6 +30,12 @@ const photoTexture = (canvas, anisotropy) => {
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.anisotropy = anisotropy;
+  texture.onUpdate = () => {
+    // The GPU holds its own copy now; shrinking the canvas frees the decoded pixels.
+    texture.onUpdate = null;
+    canvas.width = 1;
+    canvas.height = 1;
+  };
   return texture;
 };
 
