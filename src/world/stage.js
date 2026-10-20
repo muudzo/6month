@@ -4,10 +4,13 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { omegaFromResponse, stepSpring } from '../lib/spring.js';
+import { renderTargetType } from './gpu.js';
 
 const FOV = 58;
 const BLOOM = Object.freeze({ strength: 0.4, radius: 0.5, threshold: 1.05 });
 const SHIFT_OMEGA = omegaFromResponse(0.45);
+/** The bloom pipeline renders off-screen, where the canvas's own antialiasing doesn't apply. */
+const MSAA_SAMPLES = 4;
 
 /** Phones and small tablets skip bloom and render at a lower pixel ratio. */
 export function detectQuality() {
@@ -51,7 +54,12 @@ export function createStage(container, quality) {
 
   const attach = (scene) => {
     if (quality !== 'high') return;
-    composer = new EffectComposer(renderer);
+    const ratio = renderer.getPixelRatio();
+    const target = new THREE.WebGLRenderTarget(size.width * ratio, size.height * ratio, {
+      type: renderTargetType(renderer),
+      samples: MSAA_SAMPLES,
+    });
+    composer = new EffectComposer(renderer, target);
     composer.addPass(new RenderPass(scene, camera));
     bloom = new UnrealBloomPass(new THREE.Vector2(size.width, size.height), BLOOM.strength, BLOOM.radius, BLOOM.threshold);
     composer.addPass(bloom);

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { PAINT_STYLES } from '../lib/config.js';
+import { renderTargetType } from './gpu.js';
 
 /** Working resolution for the painted version (long side, px). */
 const PAINT_SIZE = 1024;
@@ -163,7 +164,7 @@ const renderPass = (renderer, material, target) => {
 export function paintify(renderer, photo, { width, height, style }) {
   const { w, h } = fitWithin(width, height, PAINT_SIZE);
   const previousTarget = renderer.getRenderTarget();
-  const options = { type: THREE.HalfFloatType, depthBuffer: false };
+  const options = { type: renderTargetType(renderer), depthBuffer: false };
   const flattened = new THREE.WebGLRenderTarget(w, h, options);
   const painted = new THREE.WebGLRenderTarget(w, h, {
     ...options,

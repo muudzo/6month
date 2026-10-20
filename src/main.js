@@ -35,7 +35,7 @@ const showProblem = (title, details) => {
 const hasWebGL = () => {
   try {
     const canvas = document.createElement('canvas');
-    return Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl'));
+    return Boolean(canvas.getContext('webgl2'));
   } catch {
     return false;
   }
