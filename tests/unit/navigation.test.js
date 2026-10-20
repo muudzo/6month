@@ -17,8 +17,14 @@ describe('segmentClear', () => {
 
 describe('findPath', () => {
   test('returns the straight line when nothing is in the way', () => {
-    const path = findPath({ x: -2, z: -10 }, { x: 2, z: -20 });
-    expect(path).toEqual([{ x: -2, z: -10 }, { x: 2, z: -20 }]);
+    const path = findPath({ x: -2, z: -15 }, { x: 2, z: -22 });
+    expect(path).toEqual([{ x: -2, z: -15 }, { x: 2, z: -22 }]);
+  });
+
+  test('steps around a bench in the way', () => {
+    const path = findPath({ x: 0, z: -10 }, { x: 0, z: -15 });
+    expect(path.length).toBeGreaterThan(2);
+    expect(allSegmentsClear(path)).toBe(true);
   });
 
   test('walks from the front steps to the future wing through every doorway', () => {
