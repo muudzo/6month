@@ -30,9 +30,12 @@ export function createInteraction({ camera, surface, interactables, occluders })
     raycaster.setFromCamera(pointer, camera);
     raycaster.far = far;
     const hits = raycaster.intersectObjects([...targets, ...occluders], true);
-    const first = hits.find((hit) => hit.object.visible !== false && (owners.has(hit.object) || hit.object.isMesh));
-    const item = first ? owners.get(first.object) : null;
-    return item && enabled.has(item.id) ? item : null;
+    const first = hits.find((hit) => {
+      const owner = owners.get(hit.object);
+      if (owner) return enabled.has(owner.id);
+      return hit.object.isMesh && hit.object.visible;
+    });
+    return first ? owners.get(first.object) ?? null : null;
   };
 
   const toNdc = (clientX, clientY) => {
