@@ -53,6 +53,10 @@
   color: var(--gold-deep);
 }
 
+.placard__title:focus {
+  outline: none;
+}
+
 .placard__title {
   margin: 0;
   font: italic 400 var(--text-xl) / 1.05 var(--font-display);
