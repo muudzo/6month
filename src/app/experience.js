@@ -254,6 +254,10 @@ export function startExperience({ stage, world, museum }) {
     },
   }).then(enter);
 
+  if (import.meta.env.DEV || new URLSearchParams(window.location.search).has('debug')) {
+    window.__museum = { player, world, showExhibit, openPlan, openLetter, activate, get visit() { return visit; } };
+  }
+
   const clock = new THREE.Clock();
   const frame = () => {
     const dt = Math.min(clock.getDelta(), 1 / 20);
