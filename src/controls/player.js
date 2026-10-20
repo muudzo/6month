@@ -55,6 +55,8 @@ export function createPlayer({ camera, surface, joystick, reducedMotion, onTap, 
   let lookMomentum = { yaw: 0, pitch: 0 };
   let mode = 'locked';
   let glide = null;
+  /** Bumped whenever a glide starts or is cancelled, so stale arrivals are ignored. */
+  let journey = 0;
   let drag = null;
   const keys = new Set();
   const held = (names) => names.some((code) => keys.has(code));
@@ -67,6 +69,7 @@ export function createPlayer({ camera, surface, joystick, reducedMotion, onTap, 
     if (mode !== 'glide' && mode !== 'focus') return;
     const wasHeadingSomewhere = glide?.nextMode === 'focus' || mode === 'focus';
     glide = null;
+    journey += 1;
     mode = 'walk';
     eyeTarget = EYE_HEIGHT;
     if (wasHeadingSomewhere) onInterrupt();
@@ -208,7 +211,10 @@ export function createPlayer({ camera, surface, joystick, reducedMotion, onTap, 
       eye: endEye,
     };
     const route = path ?? findPath(pose, target) ?? [{ x: pose.x, z: pose.z }, { x: target.x, z: target.z }];
+    journey += 1;
+    const thisJourney = journey;
     const arrive = () => {
+      if (thisJourney !== journey) return;
       pose = { x: target.x, z: target.z, yaw: end.yaw, pitch: end.pitch };
       eye = { value: end.eye, velocity: 0 };
       eyeTarget = end.eye;
@@ -256,6 +262,7 @@ export function createPlayer({ camera, surface, joystick, reducedMotion, onTap, 
     /** Stand somewhere instantly, cancelling any glide in progress. */
     jumpTo: (next) => {
       glide = null;
+      journey += 1;
       mode = 'walk';
       eyeTarget = EYE_HEIGHT;
       pose = { ...pose, ...next };
@@ -263,9 +270,13 @@ export function createPlayer({ camera, surface, joystick, reducedMotion, onTap, 
     unlock: () => {
       mode = 'walk';
     },
-    /** Leave focus mode (placard closed) and stand up straight again. */
+    /** Leave focus (the placard closed): stop any glide where it is and stand up straight. */
     release: () => {
-      if (mode === 'focus') mode = 'walk';
+      if (mode === 'glide' || mode === 'focus') {
+        glide = null;
+        journey += 1;
+        mode = 'walk';
+      }
       eyeTarget = EYE_HEIGHT;
     },
     get mode() {
