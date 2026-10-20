@@ -212,8 +212,8 @@
     right: var(--gutter-right);
     bottom: 0;
     width: auto;
-    max-height: 54vh;
-    max-height: 54dvh;
+    max-height: 48vh;
+    max-height: 48dvh;
     border-radius: 14px 14px 0 0;
     padding-bottom: env(safe-area-inset-bottom, 0px);
     transform: translateY(calc(100% + 20px));

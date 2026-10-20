@@ -192,8 +192,9 @@ export function fitSize(aspect, maxWidth, maxHeight) {
   return { width, height: width / aspect };
 }
 
-const FRAME_MARGIN = 1.35;
-const SCREEN_FILL = 0.74;
+/** Breathing room around the (already framed) artwork. */
+const FRAME_MARGIN = 1.12;
+const SCREEN_FILL = 0.8;
 
 /**
  * Where to stand so the framed artwork fills the visible part of the screen.

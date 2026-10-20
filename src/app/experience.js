@@ -38,7 +38,8 @@ const readSoundPreference = (storage) => {
   }
 };
 
-const SHEET_FRACTION = 0.54;
+/** Must match the placard's max-height on phones (placard.css). */
+const SHEET_FRACTION = 0.48;
 const isSheetLayout = () => window.matchMedia('(max-width: 760px)').matches;
 const hudBottom = () => {
   const hud = byId('hud');
