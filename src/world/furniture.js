@@ -143,8 +143,9 @@ export function signStand(materials, { x, z, rotationY = 0, eyebrow, lines }) {
   board.position.set(0, 1.25, 0.03);
   board.rotation.x = -0.2;
   group.add(board);
-  group.add(box(width + 0.04, width / sign.aspect + 0.04, 0.03, materials.brass, 0, 1.25, 0));
-  group.children[group.children.length - 1].rotation.x = -0.2;
+  const backing = box(width + 0.04, width / sign.aspect + 0.04, 0.03, materials.brass, 0, 1.25, 0);
+  backing.rotation.x = -0.2;
+  group.add(backing);
   group.add(box(0.04, 1.05, 0.04, materials.brass, 0, 0.55, -0.05));
   group.add(box(0.4, 0.03, 0.3, materials.brass, 0, 0.015, -0.05));
   group.position.set(x, 0, z);
