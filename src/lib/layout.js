@@ -25,7 +25,7 @@ export const ROOMS = Object.freeze([
 export const DOORS = Object.freeze([
   { id: 'entrance', from: 'plaza', to: 'lobby', x: 0, z0: 14, z1: 14.6, width: 3.2, height: 5.2 },
   { id: 'lobby-gallery', from: 'lobby', to: 'gallery', x: 0, z0: -0.6, z1: 0, width: 3.6, height: 4.6 },
-  { id: 'gallery-salon', from: 'gallery', to: 'salon', x: 0, z0: -38.6, z1: -38, width: 4.4, height: 5.6 },
+  { id: 'gallery-salon', from: 'gallery', to: 'salon', x: 0, z0: -38.6, z1: -38, width: 4.4, height: 4.6 },
   { id: 'salon-future', from: 'salon', to: 'future', x: 0, z0: -64.6, z1: -64, width: 3.2, height: 4.4 },
 ]);
 
@@ -33,7 +33,7 @@ const rect = (id, x0, x1, z0, z1) => ({ id, x0, x1, z0, z1 });
 const square = (id, x, z, half) => rect(id, x - half, x + half, z - half, z + half);
 
 export const LOBBY_COLUMNS = Object.freeze([
-  { x: -6, z: 3.5 }, { x: 6, z: 3.5 }, { x: -6, z: 10.5 }, { x: 6, z: 10.5 },
+  { x: -7.3, z: 3.5 }, { x: 7.3, z: 3.5 }, { x: -7.3, z: 10.5 }, { x: 7.3, z: 10.5 },
 ]);
 export const PORTICO_COLUMNS = Object.freeze(
   [-9.6, -6, -2.4, 2.4, 6, 9.6].map((x) => ({ x, z: 16.6 })),
@@ -59,7 +59,7 @@ export const HEARTS = Object.freeze([
   { id: 'month-1', x: 8.6, y: -0.3, z: 22 },
   { id: 'month-2', x: -8.3, y: 0.35, z: 12.8 },
   { id: 'month-3', x: 1.2, y: 0.28, z: -26 },
-  { id: 'month-4', x: 0, y: 5.85, z: -37.75 },
+  { id: 'month-4', x: -5.0, y: 0.3, z: -37.5 },
   { id: 'month-5', x: 0, y: 1.4, z: -54.75 },
   { id: 'month-6', x: 4.4, y: 0.3, z: -79.4 },
 ]);
