@@ -31,10 +31,10 @@ This is the only file you need to touch.
 - `herName`, `yourName`: appear on the ticket, banners, labels and letter.
 - `ticket.dedication`: the line on the admission ticket under the title.
 - `startDate`: the day it began (`YYYY-MM-DD`). Drives the live "days, and counting" counter in the lobby.
-- Each exhibit's `title`, `date`, `medium` and `note`. The notes are written in a pompous-curator voice to start
-  you off. Rewrite them with real memories; that's what will make her smile.
-- Each exhibit's optional `artist`: the credit under its title ("The Pizza Inn bathroom mirror", "A kind
-  stranger"). Leave it out and the label credits the two of you.
+- Each exhibit's `title` and `date`, one picture per line. To rename one, change only the words inside the quotes
+  after `title:`.
+- Optional extras per exhibit: `note` (a description under the title), `medium`, and `artist` (the credit under
+  the title, e.g. "A kind stranger"). Without an `artist`, the label credits the two of you.
 - `guide`: the tour guide who greets her in the lobby once the doors open. `speech` is shown one line at a time,
   `portrait` is a photo from `public/photos/` (leave it out for a gold monogram), and `name` and `role` sit beside
   it. Delete the whole block to skip the speech.
