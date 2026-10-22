@@ -29,8 +29,8 @@ export const MUSEUM = {
   },
 
   welcome:
-    'This exhibition gathers eighteen moments from the first six months of a love story that is still in progress. ' +
-    'Fifteen are photographs. Three, by popular demand, have been promoted to masterpieces. ' +
+    'This exhibition gathers seventeen moments from the first six months of a love story that is still in progress. ' +
+    'Fourteen are photographs. Three, by popular demand, have been promoted to masterpieces. ' +
     'Please take your time. Touching the art is not permitted. Holding hands with the curator is.',
 
   /**
@@ -46,7 +46,7 @@ export const MUSEUM = {
       'Good evening, my Chocolate Brownie, and welcome to the Museum of Us. I’m the Supreme Leader: founder, chief curator, head of security and, tonight, your personal guide.',
       'A few house rules before we begin. No flash photography. No touching the art. Holding hands with the guide is not only allowed, it is strongly encouraged.',
       'This exhibition took six months to collect. Every piece was gathered by hand: in restaurants, in cars, in more mirrors than the museum would like to admit, and once in a very loud club.',
-      'Gallery I holds fifteen photographs, hung in the order they happened. Through the door at the far end, in the red salon, three of them were so important they were promoted to masterpieces.',
+      'Gallery I holds fourteen photographs, hung in the order they happened. Through the door at the far end, in the red salon, three of them were so important they were promoted to masterpieces.',
       'Six hearts are hidden around the building, one for every month. Find them all and there is a reward. I am not allowed to tell you what it is.',
       'And at the very end, in the Future Wing, there is a letter waiting for you. I wrote it myself, so please be gentle with the curator.',
       'Happy six months, my Chocolate Brownie. Shall we begin?',
@@ -54,29 +54,28 @@ export const MUSEUM = {
   },
 
   /**
-   * The 18 pictures, oldest first. To rename one, change only the words inside
+   * The pictures, oldest first. To rename one, change only the words inside
    * the quotes after `title:`. Keep the quotes and the comma at the end of the line.
    * Optional extras per picture: `note` (a description), `medium`, `artist`.
    */
   exhibits: [
-    { kind: 'photo', src: 'photos/01.jpg', date: 'April 2026', title: 'Exhibit A: The Pizza Inn Mirror' },
+    { kind: 'photo', src: 'photos/01.jpg', date: 'April 2026', title: 'The Day We Met' },
     { kind: 'photo', src: 'photos/02.jpg', date: 'Early days', title: 'Study in Pink, Behind a Phone' },
     { kind: 'photo', src: 'photos/03.jpg', date: 'June 2026', title: 'Self-Portrait of the Curator' },
-    { kind: 'photo', src: 'photos/04.jpg', date: 'June 2026', title: 'The Bedroom Mirror, Second Commission' },
-    { kind: 'photo', src: 'photos/05.jpg', date: 'July 2026', title: 'Woman Reading a Menu (after Vermeer)' },
+    { kind: 'photo', src: 'photos/04.jpg', date: 'June 2026', title: 'My Coolness Was Rubbing Off on You' },
+    { kind: 'photo', src: 'photos/05.jpg', date: 'July 2026', title: 'The Face You Make When You’re the One Paying (My Second Favorite Date)' },
     { kind: 'photo', src: 'photos/06.jpg', date: 'July 2026', title: 'Still Life with Roses (and Her)' },
-    { kind: 'photo', src: 'photos/07.jpg', date: 'July 2026', title: 'Head on Shoulder, Nocturne' },
+    { kind: 'photo', src: 'photos/07.jpg', date: 'July 2026', title: 'Chop Chop Was a Favorite' },
     { kind: 'photo', src: 'photos/08.jpg', date: 'July 2026', title: 'The Pout, a Study in Two Parts' },
     { kind: 'photo', src: 'photos/09.jpg', date: 'July 2026', title: 'Blue Period' },
-    { kind: 'photo', src: 'photos/10.jpg', date: 'July 2026', title: 'Shades and Shoulder' },
-    { kind: 'photo', src: 'photos/11.jpg', date: 'July 2026', title: 'Tongue Out, Seatbelt On' },
-    { kind: 'photo', src: 'photos/12.jpg', date: 'August 2026', title: 'The Artists at Work' },
-    { kind: 'photo', src: 'photos/13.jpg', date: 'August 2026', title: 'Reflection, Late August' },
+    { kind: 'photo', src: 'photos/10.jpg', date: 'July 2026', title: 'Crazy Night, This One' },
+    { kind: 'photo', src: 'photos/12.jpg', date: 'August 2026', title: 'I Suck at Drawing, I’m Just Good at Speaking' },
+    { kind: 'photo', src: 'photos/13.jpg', date: 'August 2026', title: '4th' },
     { kind: 'photo', src: 'photos/14.jpg', date: 'August 2026', title: 'Shades On, Under the Heineken Sign' },
-    { kind: 'photo', src: 'photos/15.jpg', date: 'September 2026', title: 'Month Six, Drive-Through Queue' },
-    { kind: 'masterpiece', style: 'renaissance', src: 'photos/16.jpg', date: 'c. 2026', title: 'La Gioconda di {her}' },
-    { kind: 'masterpiece', style: 'gilded', src: 'photos/17.jpg', date: '2026', title: 'The Embrace, Graduation Night (after Klimt)' },
-    { kind: 'masterpiece', style: 'surreal', src: 'photos/18.jpg', date: '2026', title: 'The Persistence of Memory (Six Months)' },
+    { kind: 'photo', src: 'photos/15.jpg', date: 'September 2026', title: 'We Spent So Much Time Eating Food, lol' },
+    { kind: 'masterpiece', style: 'renaissance', src: 'photos/16.jpg', date: 'c. 2026', title: 'My Favorite Picture of You. I Don’t Know Why, It Just Is, lol' },
+    { kind: 'masterpiece', style: 'gilded', src: 'photos/17.jpg', date: '2026', title: 'Graduation Day, Prada U' },
+    { kind: 'masterpiece', style: 'surreal', src: 'photos/18.jpg', date: '2026', title: 'Pure Suscumry' },
   ],
 
   sculpture: {
