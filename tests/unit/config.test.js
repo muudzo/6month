@@ -65,6 +65,12 @@ describe('validateConfig', () => {
     expect(validateConfig(undefined).ok).toBe(false);
   });
 
+  test('accepts an exhibit with only a title, and rejects a note that is not text', () => {
+    const titleOnly = { kind: 'photo', src: 'photos/01.jpg', title: 'Exhibit A' };
+    expect(validateConfig(baseConfig({ exhibits: [titleOnly] })).ok).toBe(true);
+    expect(validateConfig(baseConfig({ exhibits: [exhibit({ note: 3 })] })).errors.join(' ')).toMatch(/Exhibit 1: note/);
+  });
+
   test('accepts an optional artist credit and rejects one that is not text', () => {
     expect(validateConfig(baseConfig({ exhibits: [exhibit({ artist: 'A kind stranger' })] })).ok).toBe(true);
     const result = validateConfig(baseConfig({ exhibits: [exhibit({ artist: 42 })] }));

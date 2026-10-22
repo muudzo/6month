@@ -62,7 +62,7 @@ export function createPlacard(root, museum) {
       title,
       byline && el('p', { class: 'placard__byline', text: byline }),
       data.medium && el('p', { class: 'placard__medium', text: data.medium }),
-      el('hr', { class: 'placard__rule' }),
+      data.note && el('hr', { class: 'placard__rule' }),
       data.note && el('p', { class: 'placard__note', text: data.note }),
       item.isPlaceholder && el('p', { class: 'placard__missing', text: `Waiting for its photograph: add public/${data.src}` }),
       item.kind === 'masterpiece' && restoration(item),

@@ -18,7 +18,7 @@ const exhibitErrors = (item, index) => {
     !KINDS.includes(item.kind) && `${label}: kind must be 'photo' or 'masterpiece'.`,
     !isText(item.src) && `${label}: src must point at a file, e.g. 'photos/01.jpg'.`,
     !isText(item.title) && `${label}: title cannot be empty.`,
-    typeof item.note !== 'string' && `${label}: note must be text.`,
+    !isOptionalText(item.note) && `${label}: note must be text.`,
     !isOptionalText(item.date) && `${label}: date must be text.`,
     !isOptionalText(item.medium) && `${label}: medium must be text.`,
     !isOptionalText(item.artist) && `${label}: artist must be text.`,
