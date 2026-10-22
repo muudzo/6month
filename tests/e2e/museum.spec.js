@@ -9,13 +9,24 @@ const firstMasterpiece = museum.photos.length;
 /** Loading paints every masterpiece; software WebGL in CI is far slower than a real GPU. */
 const MUSEUM_LOAD_TIMEOUT = 180_000;
 
-const enterMuseum = async (page) => {
+const guideDialog = (page) => page.getByRole('dialog', { name: `A welcome from ${museum.guide?.name}` });
+
+/** Tear the ticket and walk into the lobby, where the guide (if any) starts talking. */
+const walkIn = async (page) => {
   await page.goto('./?debug');
   const stub = page.locator('.ticket__stub');
   await expect(stub).toBeVisible({ timeout: MUSEUM_LOAD_TIMEOUT });
   await stub.click();
   await expect(page.locator('#hud')).toBeVisible();
   await page.waitForFunction(() => window.__museum?.player.mode === 'walk');
+};
+
+const enterMuseum = async (page) => {
+  await walkIn(page);
+  if (!museum.guide) return;
+  const guide = guideDialog(page);
+  await guide.getByRole('button', { name: 'Skip the welcome' }).click();
+  await expect(guide).toBeHidden();
 };
 
 test('the ticket shows the guest of honour and opens the museum', async ({ page }) => {
@@ -28,12 +39,36 @@ test('the ticket shows the guest of honour and opens the museum', async ({ page 
   await expect(page.locator('.hud__room')).not.toBeEmpty();
 });
 
+test('the guide gives the whole welcome speech and then starts the tour', async ({ page }) => {
+  test.skip(!museum.guide, 'this museum has no tour guide');
+  await walkIn(page);
+  const guide = guideDialog(page);
+  await expect(guide.locator('.guide__line')).toHaveText(museum.guide.speech[0]);
+  for (const line of museum.guide.speech.slice(1)) {
+    await guide.getByRole('button', { name: 'Continue' }).click();
+    await expect(guide.locator('.guide__line')).toHaveText(line);
+  }
+  await guide.getByRole('button', { name: 'Begin the tour' }).click();
+  await expect(guide).toBeHidden();
+  await expect(page.locator('#placard-title')).toHaveText(catalogue[0].title);
+});
+
+test('skipping the guide leaves the guest free to wander', async ({ page }) => {
+  test.skip(!museum.guide, 'this museum has no tour guide');
+  await walkIn(page);
+  await page.keyboard.press('Escape');
+  await expect(guideDialog(page)).toBeHidden();
+  await expect(page.locator('#toast')).toContainText(`Welcome, ${museum.herName}`);
+  await expect(page.locator('#placard')).toBeHidden();
+});
+
 test('selecting an exhibit opens its placard and marks it seen', async ({ page }) => {
   await enterMuseum(page);
   await page.evaluate(() => window.__museum.showExhibit(window.__museum.world.tour[0]));
   const placard = page.locator('#placard');
   await expect(placard).toBeVisible();
   await expect(page.locator('#placard-title')).toHaveText(catalogue[0].title);
+  await expect(page.locator('.placard__byline')).toContainText(catalogue[0].artist ?? `${museum.yourName} & ${museum.herName}`);
   await expect(page.locator('.tally').first()).toContainText(`1/${catalogue.length}`);
 
   await page.getByRole('button', { name: 'Next' }).click();
