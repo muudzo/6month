@@ -43,13 +43,13 @@ export const MUSEUM = {
     role: 'Chief curator and your guide tonight',
     portrait: 'photos/03.jpg',
     speech: [
-      'Good evening, my Chocolate Brownie, and welcome to the Museum of Us. I’m the Supreme Leader: founder, chief curator, head of security and, tonight, your personal guide.',
+      'Happy 6 months, baby girl. I chose some memories we have together that have great stories behind them.',
+      'Welcome to the Museum of Us. I’m the Supreme Leader: founder, chief curator, head of security and, tonight, your personal guide.',
       'A few house rules before we begin. No flash photography. No touching the art. Holding hands with the guide is not only allowed, it is strongly encouraged.',
-      'This exhibition took six months to collect. Every piece was gathered by hand: in restaurants, in cars, in more mirrors than the museum would like to admit, and once in a very loud club.',
       'Gallery I holds fourteen photographs, hung in the order they happened. Through the door at the far end, in the red salon, three of them were so important they were promoted to masterpieces.',
       'Six hearts are hidden around the building, one for every month. Find them all and there is a reward. I am not allowed to tell you what it is.',
       'And at the very end, in the Future Wing, there is a letter waiting for you. I wrote it myself, so please be gentle with the curator.',
-      'Happy six months, my Chocolate Brownie. Shall we begin?',
+      'Shall we begin, my Chocolate Brownie?',
     ],
   },
 
