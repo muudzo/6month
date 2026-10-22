@@ -10,6 +10,7 @@ import { isCoarsePointer, prefersReducedMotion } from '../ui/dom.js';
 import { createHud } from '../ui/hud.js';
 import { createJoystick } from '../ui/joystick.js';
 import { letterContent } from '../ui/letter.js';
+import { guideContent } from '../ui/guide.js';
 import { createModal } from '../ui/modal.js';
 import { createPlacard } from '../ui/placard.js';
 import { planContent } from '../ui/plan.js';
@@ -169,6 +170,30 @@ export function startExperience({ stage, world, museum }) {
     } else showExhibit(item);
   };
 
+  const welcomeHint = () =>
+    coarse
+      ? `Welcome, ${museum.herName}. Drag to look around, use the stick to walk, and tap any picture.`
+      : `Welcome, ${museum.herName}. Drag to look, walk with W A S D, and click any picture.`;
+
+  /** The guide's speech in the lobby. It ends by starting the tour, or by letting her wander. */
+  const openGuide = () => {
+    let beginTour = false;
+    audio.play('chime');
+    modal.open({
+      label: `A welcome from ${museum.guide.name ?? 'your guide'}`,
+      panelClass: 'guide',
+      closeLabel: 'Skip the welcome',
+      content: guideContent(museum.guide, {
+        onBegin: () => {
+          beginTour = true;
+          modal.close();
+        },
+        onWander: () => modal.close(),
+      }),
+      onClose: () => (beginTour ? showExhibit(world.tour[0]) : hud.toast(welcomeHint())),
+    });
+  };
+
   const openPlan = () => {
     modal.open({
       label: 'Floor plan',
@@ -254,9 +279,8 @@ export function startExperience({ stage, world, museum }) {
       playDoors: () => audio.play('doors'),
       reducedMotion,
       onInside: () => {
-        hud.toast(coarse
-          ? `Welcome, ${museum.herName}. Drag to look around, use the stick to walk, and tap any picture.`
-          : `Welcome, ${museum.herName}. Drag to look, walk with W A S D, and click any picture.`);
+        if (museum.guide) openGuide();
+        else hud.toast(welcomeHint());
         if (import.meta.env.DEV && world.missingPhotos > 0) {
           console.info(`[museum] ${world.missingPhotos} exhibits are still showing placeholders. Add photos to /public/photos.`);
         }
@@ -272,7 +296,7 @@ export function startExperience({ stage, world, museum }) {
   }).then(enter);
 
   if (import.meta.env.DEV || new URLSearchParams(window.location.search).has('debug')) {
-    window.__museum = { player, world, showExhibit, openPlan, openLetter, activate, get visit() { return visit; } };
+    window.__museum = { player, world, showExhibit, openPlan, openLetter, openGuide, activate, get visit() { return visit; } };
   }
 
   const clock = new THREE.Clock();

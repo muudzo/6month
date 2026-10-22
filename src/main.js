@@ -4,6 +4,7 @@ import './styles/entrance.css';
 import './styles/hud.css';
 import './styles/placard.css';
 import './styles/modal.css';
+import './styles/guide.css';
 
 import { MUSEUM } from './config/museum.js';
 import { prepareConfig, validateConfig } from './lib/config.js';

@@ -1,0 +1,176 @@
+/*
+ * The tour guide: a caption card at the foot of the screen, like an audio guide's
+ * subtitles, with the guide's portrait in a gilt oval breaking over its top edge.
+ * The lobby stays visible above it.
+ */
+.modal:has(> .guide) {
+  align-items: end;
+  background: linear-gradient(to top, rgba(6, 4, 3, 0.78), rgba(6, 4, 3, 0.2) 55%, transparent);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.guide {
+  --portrait-w: 92px;
+  --portrait-h: 112px;
+  width: min(660px, 100%);
+  margin-bottom: var(--space-4);
+  padding: var(--space-5) var(--space-6) var(--space-5);
+  overflow: visible;
+  border: 1px solid var(--glass-edge);
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(240, 212, 136, 0.14), transparent 45%),
+    var(--glass-strong);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  color: var(--ivory);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+
+.guide__head {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-4);
+  margin-right: var(--space-7);
+}
+
+.guide__portrait {
+  flex: none;
+  width: var(--portrait-w);
+  height: var(--portrait-h);
+  margin-top: calc(var(--portrait-h) * -0.55);
+  padding: 4px;
+  border-radius: 50%;
+  background: linear-gradient(150deg, var(--gold-bright), var(--gold-deep) 55%, var(--gold));
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.guide__photo,
+.guide__monogram {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.guide__photo {
+  object-fit: cover;
+  object-position: 62% 55%;
+}
+
+.guide__monogram {
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 40% 30%, var(--oxblood), var(--oxblood-deep));
+  font: italic 500 1.9rem / 1 var(--font-display);
+  color: var(--gold-bright);
+}
+
+.guide__role {
+  margin-bottom: var(--space-1);
+}
+
+.guide__name {
+  margin: 0;
+  font: italic 400 var(--text-lg) / 1.1 var(--font-display);
+  color: var(--gold-bright);
+}
+
+.guide__line {
+  min-height: calc(1.5em * 3);
+  margin: var(--space-4) 0 var(--space-5);
+  font: 400 var(--text-md) / 1.5 var(--font-display);
+  font-optical-sizing: auto;
+  text-wrap: pretty;
+}
+
+.guide__word {
+  display: inline-block;
+  animation: guide-word-in 560ms var(--ease-out-expo) both;
+  animation-delay: calc(var(--i) * 34ms);
+}
+
+@keyframes guide-word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.4em);
+  }
+}
+
+.guide__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.guide__dots {
+  display: flex;
+  gap: 7px;
+}
+
+.guide__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(240, 212, 136, 0.22);
+  transition: background-color var(--dur), transform var(--dur) var(--ease-out-expo);
+}
+
+.guide__dot.is-past {
+  background: var(--gold);
+}
+
+.guide__dot.is-current {
+  background: var(--gold-bright);
+  transform: scale(1.4);
+}
+
+.guide__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.guide__actions .btn--line {
+  color: var(--ivory);
+  border-color: var(--glass-edge);
+}
+
+.guide__actions .btn--line:hover {
+  border-color: var(--gold);
+}
+
+@media (max-width: 560px) {
+  .guide {
+    --portrait-w: 68px;
+    --portrait-h: 84px;
+    padding: var(--space-4) var(--space-5) var(--space-5);
+  }
+
+  .guide__line {
+    font-size: var(--text-base);
+  }
+
+  .guide__actions,
+  .guide__actions .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide__word {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .guide {
+    background: var(--ink-raised);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
