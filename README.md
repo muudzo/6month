@@ -33,6 +33,11 @@ This is the only file you need to touch.
 - `startDate`: the day it began (`YYYY-MM-DD`). Drives the live "days, and counting" counter in the lobby.
 - Each exhibit's `title`, `date`, `medium` and `note`. The notes are written in a pompous-curator voice to start
   you off. Rewrite them with real memories; that's what will make her smile.
+- Each exhibit's optional `artist`: the credit under its title ("The Pizza Inn bathroom mirror", "A kind
+  stranger"). Leave it out and the label credits the two of you.
+- `guide`: the tour guide who greets her in the lobby once the doors open. `speech` is shown one line at a time,
+  `portrait` is a photo from `public/photos/` (leave it out for a gold monogram), and `name` and `role` sit beside
+  it. Delete the whole block to skip the speech.
 - `finalLetter`: the letter at the very end. Please write this one yourself.
 - `secretNote`: the reward for finding all six hidden hearts.
 
@@ -73,6 +78,8 @@ It works on phones, tablets and computers in current Chrome, Safari, Firefox and
 
 ## What she can do inside
 
+- **Meet the guide**: in the lobby, the guide gives a short welcome speech. At the end she can begin the tour,
+  which glides her to the first photo, or explore on her own. The close button or Escape skips it.
 - **Walk**: drag to look around. On a computer, W A S D or arrow keys (Shift to hurry). On a phone, the
   on-screen stick.
 - **Tap any picture** to glide up to it and read its label, then use Previous and Next to take the tour in order.
