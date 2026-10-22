@@ -12,7 +12,7 @@ The 18 photos live in `public/photos/`, named `01.jpg` to `18.jpg`.
 
 | Files | Where they hang |
 | --- | --- |
-| `01.jpg` – `15.jpg` | Gallery I, oldest first, alternating left and right walls |
+| `01.jpg` – `15.jpg` (no `11.jpg`) | Gallery I, oldest first, alternating left and right walls |
 | `16.jpg` | The centrepiece, *La Gioconda*: a portrait of her works best |
 | `17.jpg` | *The Kiss (after Klimt)*: a photo of the two of you |
 | `18.jpg` | *The Persistence of Memory*: a fun or dreamy one |
