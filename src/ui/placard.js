@@ -53,7 +53,8 @@ export function createPlacard(root, museum) {
     current = item;
     const { data } = item;
     const isArt = item.kind === 'photo' || item.kind === 'masterpiece';
-    const byline = isArt ? `${museum.yourName} & ${museum.herName}${data.date ? `, ${data.date}` : ''}` : null;
+    const artist = data.artist ?? `${museum.yourName} & ${museum.herName}`;
+    const byline = isArt ? `${artist}${data.date ? `, ${data.date}` : ''}` : null;
     const title = el('h2', { class: 'placard__title', id: 'placard-title', tabindex: '-1', text: data.title });
 
     const content = el('div', { class: 'placard__scroll' }, [
