@@ -64,6 +64,34 @@ describe('validateConfig', () => {
   test('handles a missing config object', () => {
     expect(validateConfig(undefined).ok).toBe(false);
   });
+
+  test('accepts an optional artist credit and rejects one that is not text', () => {
+    expect(validateConfig(baseConfig({ exhibits: [exhibit({ artist: 'A kind stranger' })] })).ok).toBe(true);
+    const result = validateConfig(baseConfig({ exhibits: [exhibit({ artist: 42 })] }));
+    expect(result.errors.join(' ')).toMatch(/Exhibit 1: artist/);
+  });
+
+  test('accepts a museum without a tour guide', () => {
+    const { guide, ...withoutGuide } = baseConfig({ guide: undefined });
+    expect(validateConfig(withoutGuide).ok).toBe(true);
+  });
+
+  test('accepts a tour guide with a speech', () => {
+    const guide = { name: '{me}', role: 'Your guide', portrait: 'photos/03.jpg', speech: ['Welcome, {her}.', 'Shall we?'] };
+    expect(validateConfig(baseConfig({ guide })).ok).toBe(true);
+  });
+
+  test('explains a tour guide speech that is empty or not a list of lines', () => {
+    expect(validateConfig(baseConfig({ guide: { speech: [] } })).errors.join(' ')).toMatch(/guide\.speech/);
+    expect(validateConfig(baseConfig({ guide: { speech: 'Hello' } })).errors.join(' ')).toMatch(/guide\.speech/);
+    expect(validateConfig(baseConfig({ guide: { speech: ['Hello', ' '] } })).errors.join(' ')).toMatch(/guide\.speech/);
+  });
+
+  test('explains tour guide details that are not text', () => {
+    const result = validateConfig(baseConfig({ guide: { name: 7, portrait: false, speech: ['Hi'] } }));
+    expect(result.errors.join(' ')).toMatch(/guide\.name/);
+    expect(result.errors.join(' ')).toMatch(/guide\.portrait/);
+  });
 });
 
 describe('prepareConfig', () => {
@@ -77,6 +105,17 @@ describe('prepareConfig', () => {
     expect(prepared.masterpieces[0].number).toBe(2);
     expect(prepared.finalLetter.greeting).toBe('Dear Amara,');
     expect(prepared.catalogue).toHaveLength(2);
+  });
+
+  test('fills names into the tour guide and the artist credits', () => {
+    const prepared = prepareConfig(
+      baseConfig({
+        exhibits: [exhibit({ artist: '{me}, self-portrait' })],
+        guide: { name: '{me}', speech: ['Welcome, {her}.'] },
+      }),
+    );
+    expect(prepared.photos[0].artist).toBe('Tendai, self-portrait');
+    expect(prepared.guide).toEqual({ name: 'Tendai', speech: ['Welcome, Amara.'] });
   });
 
   test('defaults masterpiece styles in order', () => {

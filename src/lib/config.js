@@ -21,6 +21,7 @@ const exhibitErrors = (item, index) => {
     typeof item.note !== 'string' && `${label}: note must be text.`,
     !isOptionalText(item.date) && `${label}: date must be text.`,
     !isOptionalText(item.medium) && `${label}: medium must be text.`,
+    !isOptionalText(item.artist) && `${label}: artist must be text.`,
     item.style !== undefined && !PAINT_STYLES.includes(item.style) &&
       `${label}: style must be one of ${PAINT_STYLES.join(', ')}.`,
   ].filter(Boolean);
@@ -34,6 +35,18 @@ const collectionErrors = (exhibits) => {
     photos > MAX_PHOTOS && `Gallery I has room for ${MAX_PHOTOS} photos (found ${photos}).`,
     masterpieces > MAX_MASTERPIECES && `The salon has room for ${MAX_MASTERPIECES} masterpieces (found ${masterpieces}).`,
     ...exhibits.flatMap(exhibitErrors),
+  ].filter(Boolean);
+};
+
+const guideErrors = (guide) => {
+  if (guide === undefined) return [];
+  if (!guide || typeof guide !== 'object') return ['guide must describe the tour guide, or be removed.'];
+  return [
+    (!Array.isArray(guide.speech) || guide.speech.length === 0 || !guide.speech.every(isText)) &&
+      'guide.speech must be a list of lines for the guide to say.',
+    !isOptionalText(guide.name) && 'guide.name must be text.',
+    !isOptionalText(guide.role) && 'guide.role must be text.',
+    !isOptionalText(guide.portrait) && "guide.portrait must be a file path like 'photos/03.jpg'.",
   ].filter(Boolean);
 };
 
@@ -59,6 +72,7 @@ export function validateConfig(config) {
     c.finalLetter !== undefined &&
       (!Array.isArray(c.finalLetter?.paragraphs) || !c.finalLetter.paragraphs.every((p) => typeof p === 'string')) &&
       'finalLetter.paragraphs must be a list of text paragraphs.',
+    ...guideErrors(c.guide),
   ].filter(Boolean);
   return { ok: errors.length === 0, errors };
 }
