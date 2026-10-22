@@ -192,6 +192,22 @@ export function fitSize(aspect, maxWidth, maxHeight) {
   return { width, height: width / aspect };
 }
 
+/** Never plan for less than a fifth of the screen, however tall the label gets. */
+const MIN_ART_SHARE = 0.2;
+
+/**
+ * Share of the screen left for the artwork once its label is open: above a
+ * phone's bottom sheet, or beside the side card on wider screens.
+ * @param {{ width: number, height: number }} screen CSS pixels
+ * @param {{ isSheet: boolean, labelWidth: number, labelHeight: number, hudBottom: number }} label
+ * @returns {{ availWidth: number, availHeight: number }}
+ */
+export function visibleArtArea(screen, { isSheet, labelWidth, labelHeight, hudBottom }) {
+  if (!isSheet) return { availWidth: 1 - labelWidth / screen.width, availHeight: 1 };
+  const free = screen.height - labelHeight - hudBottom;
+  return { availWidth: 1, availHeight: Math.max(MIN_ART_SHARE, free / screen.height) };
+}
+
 /** Breathing room around the (already framed) artwork. */
 const FRAME_MARGIN = 1.12;
 const SCREEN_FILL = 0.8;

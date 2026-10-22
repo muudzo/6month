@@ -12,6 +12,7 @@ import {
   masterpieceSlots,
   fitSize,
   viewPointFor,
+  visibleArtArea,
   hangHeight,
   GALLERY_FRAME_MIN_BOTTOM,
 } from '../../src/lib/layout.js';
@@ -131,6 +132,37 @@ describe('fitSize', () => {
   test('fits portrait and landscape images inside the box', () => {
     expect(fitSize(0.75, 2, 2)).toEqual({ width: 1.5, height: 2 });
     expect(fitSize(2, 2, 2)).toEqual({ width: 2, height: 1 });
+  });
+});
+
+describe('visibleArtArea', () => {
+  const phone = { width: 390, height: 844 };
+
+  test('on a phone, leaves the art the space between the header and the label as it really is', () => {
+    const area = visibleArtArea(phone, { isSheet: true, labelWidth: 0, labelHeight: 270, hudBottom: 140 });
+    expect(area.availWidth).toBe(1);
+    expect(area.availHeight).toBeCloseTo((844 - 270 - 140) / 844);
+  });
+
+  test('a shorter label gives the art more room', () => {
+    const short = visibleArtArea(phone, { isSheet: true, labelWidth: 0, labelHeight: 270, hudBottom: 140 });
+    const tall = visibleArtArea(phone, { isSheet: true, labelWidth: 0, labelHeight: 405, hudBottom: 140 });
+    expect(short.availHeight).toBeGreaterThan(tall.availHeight);
+  });
+
+  test('with no label open, only the header is in the way', () => {
+    const area = visibleArtArea(phone, { isSheet: true, labelWidth: 0, labelHeight: 0, hudBottom: 140 });
+    expect(area.availHeight).toBeCloseTo((844 - 140) / 844);
+  });
+
+  test('never plans for less than a fifth of the screen', () => {
+    const area = visibleArtArea(phone, { isSheet: true, labelWidth: 0, labelHeight: 800, hudBottom: 140 });
+    expect(area.availHeight).toBe(0.2);
+  });
+
+  test('on a wide screen, leaves the art the space beside the label card', () => {
+    const area = visibleArtArea({ width: 1440, height: 900 }, { isSheet: false, labelWidth: 450, labelHeight: 876, hudBottom: 100 });
+    expect(area).toEqual({ availWidth: 1 - 450 / 1440, availHeight: 1 });
   });
 });
 

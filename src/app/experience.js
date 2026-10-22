@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { HEARTS, roomAt, viewPointFor } from '../lib/layout.js';
+import { HEARTS, roomAt, viewPointFor, visibleArtArea } from '../lib/layout.js';
 import { collectHeart, loadVisit, markRenewed, markSeen, saveVisit } from '../lib/visit.js';
 import { createInteraction } from '../controls/interaction.js';
 import { createPlayer } from '../controls/player.js';
@@ -39,23 +39,23 @@ const readSoundPreference = (storage) => {
   }
 };
 
-/** Must match the placard's max-height on phones (placard.css). */
-const SHEET_FRACTION = 0.48;
 const isSheetLayout = () => window.matchMedia('(max-width: 760px)').matches;
 const hudBottom = () => {
   const hud = byId('hud');
   return hud.hidden ? 0 : hud.getBoundingClientRect().bottom;
 };
 
-/** Fraction of the screen left for the artwork once the placard is open. */
-const visibleArea = () => {
-  if (isSheetLayout()) {
-    const free = window.innerHeight * (1 - SHEET_FRACTION) - hudBottom();
-    return { availWidth: 1, availHeight: Math.max(0.2, free / window.innerHeight) };
-  }
-  const covered = Math.min(PLACARD_WIDTH, window.innerWidth * 0.42) + 40;
-  return { availWidth: 1 - covered / window.innerWidth, availHeight: 1 };
-};
+/** Fraction of the screen left for the artwork, given how tall the open placard really is. */
+const visibleArea = (labelHeight) =>
+  visibleArtArea(
+    { width: window.innerWidth, height: window.innerHeight },
+    {
+      isSheet: isSheetLayout(),
+      labelWidth: Math.min(PLACARD_WIDTH, window.innerWidth * 0.42) + 40,
+      labelHeight,
+      hudBottom: hudBottom(),
+    },
+  );
 
 /** Pixels to slide the scene so the artwork sits in the space the placard leaves. */
 const viewShiftFor = (footprint) => {
@@ -122,7 +122,8 @@ export function startExperience({ stage, world, museum }) {
   };
 
   const focusOn = (item, { onArrive } = {}) => {
-    const view = viewPointFor(item.slot, item.size, { fovDeg: stage.camera.fov, aspect: stage.camera.aspect, ...visibleArea() });
+    const area = visibleArea(placard.footprint().bottom);
+    const view = viewPointFor(item.slot, item.size, { fovDeg: stage.camera.fov, aspect: stage.camera.aspect, ...area });
     player.glideTo({ x: view.x, z: view.z, y: view.y, lookAt: item.slot.position }, { nextMode: 'focus', onArrive });
   };
 
@@ -130,7 +131,7 @@ export function startExperience({ stage, world, museum }) {
     const index = world.tour.indexOf(item);
     const inTour = index >= 0;
     const step = (delta) => () => showExhibit(world.tour[(index + delta + world.tour.length) % world.tour.length]);
-    focusOn(item);
+    // The placard goes up first so the camera can frame the art around its real height.
     placard.open(item, {
       position: index + 1,
       total: world.tour.length,
@@ -138,6 +139,7 @@ export function startExperience({ stage, world, museum }) {
       onNext: inTour ? step(1) : undefined,
       onClose: closePlacard,
     });
+    focusOn(item);
     audio.play('chime');
     if (!inTour) return;
     const before = visit.seen.length;
