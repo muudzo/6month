@@ -11,8 +11,12 @@ const BLOOM = Object.freeze({ strength: 0.4, radius: 0.5, threshold: 1.05 });
 const SHIFT_OMEGA = omegaFromResponse(0.45);
 /** The bloom pipeline renders off-screen, where the canvas's own antialiasing doesn't apply. */
 const MSAA_SAMPLES = 4;
+/** Pixel ratio while moving: phones and small tablets render lighter so walking stays smooth. */
+const MOVING_PIXEL_RATIO = Object.freeze({ high: 2, low: 1.5 });
+/** Pixel ratio while standing still at a picture: full screen sharpness, now that the camera isn't moving. */
+const STILL_PIXEL_RATIO = 3;
 
-/** Phones and small tablets skip bloom and render at a lower pixel ratio. */
+/** Phones and small tablets skip bloom and render at a lower pixel ratio while moving. */
 export function detectQuality() {
   const forced = new URLSearchParams(window.location.search).get('quality');
   if (forced === 'low' || forced === 'high') return forced;
@@ -28,7 +32,11 @@ export function detectQuality() {
  */
 export function createStage(container, quality) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, quality === 'high' ? 2 : 1.5));
+  const deviceRatio = window.devicePixelRatio || 1;
+  const movingRatio = Math.min(deviceRatio, MOVING_PIXEL_RATIO[quality]);
+  const stillRatio = Math.min(deviceRatio, STILL_PIXEL_RATIO);
+  let isStill = false;
+  renderer.setPixelRatio(movingRatio);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NeutralToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -98,6 +106,16 @@ export function createStage(container, quality) {
     /** Pixels to slide the picture by (positive x moves the scene left). */
     setViewShift: (x, y) => {
       shiftTarget = { x, y };
+    },
+    /** Sharpen to the screen's full resolution while the camera rests on a picture. */
+    setStill: (still) => {
+      if (still === isStill) return;
+      isStill = still;
+      const ratio = still ? stillRatio : movingRatio;
+      if (ratio === renderer.getPixelRatio()) return;
+      renderer.setPixelRatio(ratio);
+      composer?.setPixelRatio(ratio);
+      resize();
     },
     get size() {
       return size;

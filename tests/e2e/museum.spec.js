@@ -78,6 +78,22 @@ test('selecting an exhibit opens its placard and marks it seen', async ({ page }
   await expect(placard).toBeHidden();
 });
 
+test('a picture is drawn at full screen sharpness while she looks at it, and lighter while walking', async ({ page, isMobile }) => {
+  const renderRatio = () => page.evaluate(() => {
+    const canvas = document.querySelector('#stage canvas');
+    return canvas.width / canvas.clientWidth;
+  });
+  const deviceRatio = await page.evaluate(() => window.devicePixelRatio);
+  await enterMuseum(page);
+  await page.evaluate(() => window.__museum.showExhibit(window.__museum.world.tour[0]));
+  await page.waitForFunction(() => window.__museum.player.mode === 'focus');
+  await expect.poll(renderRatio).toBeCloseTo(Math.min(deviceRatio, 3), 1);
+
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#placard')).toBeHidden();
+  await expect.poll(renderRatio).toBeCloseTo(Math.min(deviceRatio, isMobile ? 1.5 : 2), 1);
+});
+
 test('masterpieces offer a restoration slider', async ({ page }) => {
   await enterMuseum(page);
   await page.evaluate((index) => window.__museum.showExhibit(window.__museum.world.tour[index]), firstMasterpiece);

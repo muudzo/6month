@@ -314,6 +314,7 @@ export function startExperience({ stage, world, museum }) {
     hud.setRoom(roomAt(player.pose.x, player.pose.z)?.name);
     const shift = placard.isOpen ? viewShiftFor(placard.footprint()) : { x: 0, y: 0 };
     stage.setViewShift(shift.x, shift.y);
+    stage.setStill(player.mode === 'focus');
     stage.render(world.scene, dt);
     requestAnimationFrame(frame);
   };
