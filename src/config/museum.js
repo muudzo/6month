@@ -90,13 +90,14 @@ export const MUSEUM = {
   futureExhibits: ['Month Seven', 'Our First Trip Together', 'Inside Jokes We Haven’t Made Yet', 'Everything After'],
 
   finalLetter: {
-    greeting: 'Dear {her},',
+    greeting: 'To my Chocolate Brownie,',
     paragraphs: [
-      'Six months ago I didn’t know one person could become the best part of every single day. Now I can’t really remember what my days looked like before you.',
-      'Thank you for the laughs, the late-night conversations, the patience when I’m being ridiculous, and for being exactly who you are. This museum is small, but it holds the most valuable collection I own.',
+      'Six months in, and I am so grateful that I get to call you my girlfriend. But what I am most grateful for is that you are my friend too: the person I want to tell everything to, laugh with, and eat far too much food with.',
+      'I know I get on your nerves sometimes. Okay, maybe more than sometimes. But it is always in good spirits, and only because being around you makes me happy enough to be ridiculous.',
       'Every frame in the Future Wing is empty on purpose. I can’t wait to fill them with you.',
+      'I love you loads.',
     ],
-    signoff: 'Yours, always,\n{me}',
+    signoff: 'Signed with love,\n{me}',
   },
 
   renewal: {
